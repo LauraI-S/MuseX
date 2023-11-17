@@ -1,0 +1,17 @@
+TODO - mongodb & node.js
+TODO - netlify 
+TODO -   name: String,
+  mail: String,
+  phone: String,
+  instrument: String,
+  bandType: String,
+  gender: String,
+  hasEquipment: Boolean,
+  repertoire: [String],
+  genre: String,
+  occasion: String
+TODO play game
+
+
+id:"1" name:"Boti" contact:"boti@fakemail.com" gender:"male" instrument: "guitar, bass, singer,Ukulele" genre:"Blues,Country,EasyListening,Folk,Jazz,Pop,Soul,R&B,Eastern-Europe,Latin" hasEquipment:true occasions:"wedding,birthday,gala,funeral,concert" line-up:"solo,duo, anything" 
+summary:"Boti is a Budapest-born Artist, currently based in Berlin,Germany. He is bes known for playing the guitar and singing backing vocals for acts like The Ruffcats,Fol Mega or the Blue Man Group Berlin. He backed numerous artists like Joy Denalane, Max Herre,Megaloh, Andreas Kümmert or Mark Forster"
