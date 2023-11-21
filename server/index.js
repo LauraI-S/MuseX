@@ -11,8 +11,6 @@ const router = express.Router();
 
 const app = express();
 
-const port = process.env.PORT || 5001;
-
 // loading .env file
 
 const DBConnection = async () => {
@@ -20,9 +18,9 @@ const DBConnection = async () => {
 
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("connection to MONGODB established".bgGreen);
+    console.log("connection to MONGO_URI established".bgGreen);
   } catch (error) {
-    console.log("error connection to MONGODB:>> ".red, error);
+    console.log("error connection to MONGO_URI:>> ".red, error);
   }
 };
 DBConnection();
@@ -36,23 +34,26 @@ const addMiddlewares = () => {
     })
   );
 };
-app.use("/api", router);
-app.use("/api", musicianRoute);
-router.get("/test", (req, res) => {
-  res.json({
-    message: "this is my test route",
-  });
-});
+const addRoutes = () => {
+  app.use("/api", router);
+  app.use("/api", musicianRoute);
+};
 
-app.listen(port, () => {
-  console.log("Server is running on ".rainbow + port + " port".rainbow);
-  // console.log("hello :>> ");
-});
+// router.get("/test", (req, res) => {
+//   res.json({
+//     message: "this is my test route",
+//   });
+// });
+
+const startServer = () => {
+  const port = process.env.PORT || 5001;
+  app.listen(port, () => {
+    console.log("Server is running on ".rainbow + port + " port".rainbow);
+    // console.log("hello :>> ");
+  });
+};
 
 //!IIFE  (Immediately Invoked Function Expression)
-
-const serverController = () => {};
-
 (async function controller() {
   await DBConnection();
   addMiddlewares();
