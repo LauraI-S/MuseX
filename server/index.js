@@ -5,6 +5,7 @@ import colors from "colors";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import musicianRoute from "../server/routes/musicianRoute.js";
+import userRoute from "../server/routes/userRoute.js";
 
 dotenv.config();
 const router = express.Router();
@@ -35,15 +36,9 @@ const addMiddlewares = () => {
   );
 };
 const addRoutes = () => {
-  app.use("/api", router);
-  app.use("/api", musicianRoute);
+  app.use("/api/musicians", musicianRoute);
+  app.use("/api", userRoute);
 };
-
-// router.get("/test", (req, res) => {
-//   res.json({
-//     message: "this is my test route",
-//   });
-// });
 
 const startServer = () => {
   const port = process.env.PORT || 5001;
@@ -60,3 +55,9 @@ const startServer = () => {
   addRoutes();
   startServer();
 })();
+
+// router.get("/test", (req, res) => {
+//   res.json({
+//     message: "this is my test route",
+//   });
+// });
