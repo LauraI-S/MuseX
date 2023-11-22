@@ -1,5 +1,9 @@
-TODO - mongodb & node.js
+TODO - check why there are 3 musicians
 TODO - netlify 
+TODO - create frontend:
+TODO - pages: Home, Profile,Login, Logout, Signup, UpdateProfile, favorites, 
+TODO - components: Navbar, Footer, searchbar, dropdown, Comments
+
 TODO -   name: String,
   mail: String,
   phone: String,
