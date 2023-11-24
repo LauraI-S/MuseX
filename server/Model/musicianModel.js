@@ -20,7 +20,7 @@ const musicianSchema = new mongoose.Schema({
     required: true,
   },
   instrument: {
-    type: [String],
+    type: String,
     required: true,
   },
   summary: {
@@ -34,6 +34,10 @@ const musicianSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+  },
+  likes: {
+    type: Number,
+    required: false,
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
 });

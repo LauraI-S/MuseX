@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import colors from "colors";
-// import router from "./routes/testRoute.js";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import musicianRoute from "../server/routes/musicianRoute.js";
@@ -36,7 +35,7 @@ const addMiddlewares = () => {
   );
 };
 const addRoutes = () => {
-  app.use("/api/musicians", musicianRoute);
+  app.use("/api", musicianRoute);
   app.use("/api", userRoute);
 };
 
@@ -55,9 +54,3 @@ const startServer = () => {
   addRoutes();
   startServer();
 })();
-
-// router.get("/test", (req, res) => {
-//   res.json({
-//     message: "this is my test route",
-//   });
-// });

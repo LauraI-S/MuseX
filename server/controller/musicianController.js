@@ -4,7 +4,7 @@ const getAllMusicians = async (req, res) => {
   try {
     const musicians = await musicianModel
       .find({})
-      .populate({ path: "user", select: ["username"] });
+      .populate({ path: "user", select: ["name"] });
 
     if (musicians) {
       res.status(200).json({
@@ -27,25 +27,68 @@ const getAllMusicians = async (req, res) => {
   }
 };
 
-const getMusiciansWithLikes = async (req, res) => {
-  console.log("req :>> ".magenta, req);
-  const { likes } = req.query;
-  console.log("likes :>> ", likes);
-  if (req.query.likes) {
-    try {
-      const musiciansWithLikes = await musicianModel.find({
-        likes: { $gte: req.query.likes },
-      });
-      res.status(200).json({
-        number: musiciansWithLikes.length,
-      });
-    } catch (error) {
-      console.log("error :>> ", error);
-      res.status(500).json({
-        message: "something went wrong",
-      });
-    }
-  }
-};
+// const getMusiciansWithLikes = async (req, res) => {
+//   console.log("req :>> ".magenta, req.params.likes);
+//   const { likes } = req.params;
+//   console.log("likes :>> ", likes);
+//   if (req.params.likes) {
+//     try {
+//       const musiciansWithLikes = await musicianModel.find({
+//         likes: req.params.likes,
+//       });
+//       res.status(200).json({
+//         number: musiciansWithLikes.length,
+//       });
+//     } catch (error) {
+//       console.log("error :>> ", error);
+//       res.status(500).json({
+//         message: "something went wrong",
+//       });
+//     }
+//   }
+// };
 
-export { getAllMusicians, getMusiciansWithLikes };
+// const getMusiciansByInstruments = async (req, res) => {
+//   console.log("req :>> ".magenta, req.params.instrument);
+//   const { instrument } = req.params; // Corrected variable name
+//   console.log("instrument :>> ", instrument);
+//   if (req.params.instrument) {
+//     try {
+//       const musiciansByInstruments = await musicianModel.find({
+//         instrument: req.params.instrument, // Corrected parameter name
+//       });
+//       res.status(200).json({
+//         string: musiciansByInstruments,
+//       });
+//     } catch (error) {
+//       console.log("error :>> ", error);
+//       res.status(500).json({
+//         message: "something went wrong",
+//       });
+//     }
+//   }
+// };
+
+// const getMusiciansByInstruments = async (req, res) => {
+//   console.log("req :>> ".magenta, req.params.instrument);
+//   const { instrument } = req.params;
+//   console.log("instruments :>> ", instrument);
+//   if (req.params.instrument) {
+//     try {
+//       const musiciansByInstruments = await musicianModel.find({
+//         instrument: req.params.instrument,
+//       });
+//       res.status(200).json({
+//         number: musiciansByInstruments.length,
+//         musicians: musiciansByInstrument,
+//       });
+//     } catch (error) {
+//       console.log("error :>> ", error);
+//       res.status(500).json({
+//         message: "something went wrong",
+//       });
+//     }
+//   }
+// };
+
+export { getAllMusicians };
