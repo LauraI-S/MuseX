@@ -1,8 +1,11 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "dependencies": {
     "dotenv": "^16.3.1"
 =======
+=======
+>>>>>>> fac4c93cbd084f5592abeadbf449615e8a9594ea
   "name": "client",
   "private": true,
   "version": "0.0.0",
@@ -33,6 +36,9 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
+<<<<<<< HEAD
+>>>>>>> fac4c93cbd084f5592abeadbf449615e8a9594ea
+=======
 >>>>>>> fac4c93cbd084f5592abeadbf449615e8a9594ea
   }
 }
