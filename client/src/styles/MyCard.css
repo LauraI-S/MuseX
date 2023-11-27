@@ -1,0 +1,19 @@
+.card-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-image {
+    max-width: 100%;
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+
+.card-details {
+    font-size: 14px;
+    margin-top: 8px;
+}

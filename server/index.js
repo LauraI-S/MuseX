@@ -37,12 +37,12 @@ const addMiddlewares = () => {
 };
 //!Routes Configuration
 const addRoutes = () => {
-  app.use("/api", musicianRoute);
-  app.use("/api", userRoute);
+  app.use("/api/musicians", musicianRoute);
+  app.use("/api/users", userRoute);
 };
 
 const startServer = () => {
-  const port = process.env.PORT || 2060;
+  const port = process.env.PORT || 4000;
   app.listen(port, () => {
     console.log("Server is running on ".rainbow + port + " port".rainbow);
     // console.log("hello :>> ");

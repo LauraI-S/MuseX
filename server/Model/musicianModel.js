@@ -8,19 +8,19 @@ const musicianSchema = new mongoose.Schema({
     default: mongoose.Types.ObjectId,
   },
   name: {
-    type: [String],
+    type: String,
     required: true,
   },
   genre: {
     type: Array,
-    required: true,
+    required: false,
   },
   hasEquipment: {
     type: Boolean,
     required: true,
   },
   instrument: {
-    type: String,
+    type: Array,
     required: true,
   },
   summary: {
