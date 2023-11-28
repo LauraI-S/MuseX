@@ -4,14 +4,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Home from '../src/pages/Home';
 import SignUp from '../src/pages/SignUp';
 import Login from './pages/Login';
-import Details from './pages/Details';
+import DetailsCard from './pages/DetailsCard';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/details" element={<Details/>} />
+        <Route path="/details" element={<DetailsCard/>} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login/>} />
       </Routes>

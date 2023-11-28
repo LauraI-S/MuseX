@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../components/MyCard";
+import MyCard from "../components/MyCard";
+import "../styles/MyCard.css"
 
 type Musician = {
+  _id: any;
   name: string;
   instrument: string[];
   hasEquipment: boolean;
   img: string;
   summary: string;
+  musician: Musician;
 }
 
 
@@ -47,20 +50,22 @@ function Home() {
   console.log("musicians :>> ", musicians);
 
   return (
-    <div>
+    <div className="container">
+       <div className="row mx-md-auto"></div>
       <Link to="/signup">SignUp</Link> |
       <Link to="/details">Details</Link> |
       <Link to="/login">Login</Link> |
 
       <p>This is the home page.</p>
 
-      {musicians &&
+     {musicians &&
         musicians.map((musician) => (
-          <MyCard key={musician._id} name={musician.name} img={musician.img} instrument={musician.instrument} />
+          <MyCard key={musician._id} musician={musician} hasEquipment={musician.hasEquipment} />
         ))}
     </div>
   );
 }
+
   export default Home;
 //   return (
 //     <div>
@@ -71,17 +76,7 @@ function Home() {
 //       {console.log("%c JSX renders", "color:green")}
 //       <p>This is the home page.</p>
 
-// {musicians && musicians.map((musician) => {
-//   return (<div><p key={musician._id}>{musician.name}</p>
-//    <div><p>{ musician.img}</p>
-//       <p>{musician.instrument}</p>
-//       </div>
-//  </div>)
 
-//       })}
-//     </div>
-//   );
-// }
 
 
 
@@ -97,6 +92,15 @@ function Home() {
         console.log('myMusicians :>> ', myMusicians);
 
       </p> */}
+
+
+//       {musicians &&
+//         musicians.map((musician) => (
+//           <MyCard key={musician._id} name={musician.name} img={musician.img} instrument={musician.instrument} />
+//         ))}
+//     </div>
+//   );
+// }
 
 
 //!   
