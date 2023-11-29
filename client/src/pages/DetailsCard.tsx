@@ -71,7 +71,7 @@ function Details() {
   <div className='my-card'>
       {musicians &&
         musicians.map((musician) => (
-          <div key={musician._id} className='my-card'>
+          <div key={musician._id} className='myCard'>
             
             <img src={musician.img} alt={musician.name} style={{ maxWidth: '100%' }} />
             <div card-container>
