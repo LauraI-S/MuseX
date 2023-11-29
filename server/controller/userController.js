@@ -55,7 +55,7 @@ const signup = async (req, res) => {
     if (hashedPassword) {
       //using model, saving information, storing in database
       const newUser = new userModel({
-        name: req.body.name,
+        name: req.body.userName,
         email: req.body.email,
         // image: req.body.image
         password: hashedPassword,

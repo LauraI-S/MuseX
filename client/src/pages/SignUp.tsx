@@ -1,6 +1,13 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import '../styles/SignUp.css'; // Import a CSS file for custom styling
+import React, { ChangeEvent, useState } from "react";
+import { Button} from "react-bootstrap";
+import "../styles/SignUp.css"; // Import a CSS file for custom styling
+
+export interface User {
+  userName: string;
+    email: string;
+    password: string;
+    userImage: string;
+}
 
 function SignUp() {
   const [newUser, setNewUser] = useState<User>({
@@ -15,33 +22,59 @@ function SignUp() {
     //!the following line basically combines the new user-information with existing information
     //!...:spread-operator keeps track of the previously stored information
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    console.log('e.target.name :>> ', e.target.name);
-    console.log('e.target.value :>> ', e.target.value);
+    console.log("e.target.name :>> ", e.target.name);
+    console.log("e.target.value :>> ", e.target.value);
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  //!preventing new page-reload by default, console-logging my new user
-  const handleSubmit = (e) => {
+  //!preventing new page-refresh by default, console-logging my new user
+  const signUp = (e) => {
     e.preventDefault();
-    console.log('newUser :>> ', newUser);
-    // Add your sign-up logic here
+    console.log("newUser :>> ", newUser);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("X-API-Key", "{{token}}");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("userName", newUser.userName);
+    urlencoded.append("email", newUser.email);
+    urlencoded.append("password", newUser.password);
+    urlencoded.append(
+      "image",
+      newUser.userImage
+        ? newUser.userImage
+        : "https://www.freepik.com/free-vector/anonymous-avatars-grey-circles_44471922.htm#query=profile%20placeholder&position=0&from_view=keyword&track=ais&uuid=d03ee9c5-3140-4010-9bfe-0cea30b89e70"
+    );
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:4000/api/users/signup", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log("result", result))
+      .catch((error) => console.log("error", error));
   };
   return (
     <div className="container fancy-container">
-
       <br />
       <div className="registration-container fancy-form-container">
         <h1 className="text-center">SIGN UP</h1>
-        <form onSubmit={handleSubmit}>
-          <p className="text-center">Fill in the information below to sign up:</p>
+        <form onSubmit={signUp}>
+          <p className="text-center">
+            Fill in the information below to sign up:
+          </p>
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="userName">Username:</label>
             <input
               type="text"
-              name="username"
+              name="userName"
               onChange={handleSignupInputChange}
               className="form-control"
             />
@@ -60,18 +93,15 @@ function SignUp() {
           <div className="form-group">
             <label htmlFor="password">Password:</label>
             <input
-              type={showPassword ? 'hide' : 'password'}
+              type={showPassword ? "hide" : "password"}
               placeholder="Enter password..."
               name="password"
               onChange={handleSignupInputChange}
               className="form-control"
               required
             />
-            <div
-              className="password-toggle"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? 'Rather hide' : 'Show me that'} password
+            <div className="password-toggle" onClick={togglePasswordVisibility}>
+              {showPassword ? "Rather hide" : "Show me that"} password
             </div>
           </div>
           <Button type="submit" className="btn-primary btn-block">
@@ -80,7 +110,7 @@ function SignUp() {
         </form>
       </div>
       <p className="text-center">
-        Already have an account?{' '}
+        Already have an account?{" "}
         <a className="resetButton" href="login">
           Log in!
         </a>
