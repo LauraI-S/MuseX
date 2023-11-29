@@ -41,32 +41,37 @@ const signup = async (req, res) => {
   //if the req.body.email exists (an email is being sent from the client), then we check IF the email exists already in the database
   const existingUser = await userModel.findOne({ email: req.body.email });
   if (existingUser) {
-    //if an user with that email is found in our database, we send a response to our client informing about it (email already existing ...)
-  } else {
-    //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash pasword, 2nd save user, 3rd reponse to the client
+    res.status(200).json({
+      message: "email already exists",
+    });
   }
 
-  //?encrypt password
-  const hashedPassword = await encryptPassword(req.body.password);
-  if (hashedPassword) {
-    //using model, saving information, storing in database
-    const newUser = new userModel({
-      name: req.body.name,
-      email: req.body.email,
-      // image: req.body.image
-      password: hashedPassword,
-    });
+  //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
+  if (!existingUser) {
+    //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash pasword, 2nd save user, 3rd reponse to the client
 
-    const savedUser = await newUser.save();
-    console.log("savedUser :>> ", savedUser);
-    res.status(201).json({
-      message: "user registered",
-      savedUser,
-    });
-  } else {
-    res.status(500).json({
-      message: "something went wrong",
-    });
+    //?encrypt password
+    const hashedPassword = await encryptPassword(req.body.password);
+    if (hashedPassword) {
+      //using model, saving information, storing in database
+      const newUser = new userModel({
+        name: req.body.name,
+        email: req.body.email,
+        // image: req.body.image
+        password: hashedPassword,
+      });
+
+      const savedUser = await newUser.save();
+      console.log("savedUser :>> ", savedUser);
+      res.status(201).json({
+        message: "user registered",
+        savedUser,
+      });
+    } else {
+      res.status(500).json({
+        message: "something went wrong",
+      });
+    }
   }
 };
 
