@@ -46,7 +46,7 @@ function SignUp() {
       "image",
       newUser.userImage
         ? newUser.userImage
-        : "https://www.freepik.com/free-vector/anonymous-avatars-grey-circles_44471922.htm#query=profile%20placeholder&position=0&from_view=keyword&track=ais&uuid=d03ee9c5-3140-4010-9bfe-0cea30b89e70"
+        : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
     );
 
     const requestOptions = {
