@@ -1,5 +1,5 @@
 import userModel from "../Model/userModel.js";
-import { encryptPassword } from "../utils/encryptPassword.js";
+import { encryptPassword, verifyPassword } from "../utils/passwordServices.js";
 
 // const getAllUsers = async (req, res) => {
 //   try {
@@ -28,7 +28,7 @@ if (number !== 1) {
 
 const signup = async (req, res) => {
   console.log("register controller working :>> ");
-  //!seeing the given data in postman
+  //!seeing the given data in postman, referring to the data within the body of that request
   console.log("req.body :>> ", req.body);
   //REVIEW write logic in error-handling: if there´s no information in req.body--> send info to client
   if (!req.body) {
@@ -48,7 +48,7 @@ const signup = async (req, res) => {
 
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {
-    //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash pasword, 2nd save user, 3rd reponse to the client
+    //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash password, 2nd save user, 3rd reponse to the client
 
     //?encrypt password
     const hashedPassword = await encryptPassword(req.body.password);
@@ -74,22 +74,51 @@ const signup = async (req, res) => {
     }
   }
 };
+const login = async (req, res) => {
+  console.log("login route works :>> ");
+  const { email, password } = req.body;
+  //if there´s no email and no password i send the response
+  if (!email && !password) {
+    res.status(400).json({
+      //(400)=Bad Request
+      message: "password or email are missing",
+    });
+  } else {
+    try {
+      //logic check if the user exists?
+      const existingUser = await userModel.findOne({ email: req.body.email });
+      if (!existingUser) {
+        res.status(500).json({
+          message: "email not found...do you already have an account?",
+        });
+      }
+      //what if the user exists? check password!
+      if (existingUser) {
+        //check if password is correct?
+        const existingPassword = await verifyPassword(
+          req.body.password,
+          existingUser.password
+        );
+        if (!existingPassword) {
+          //password is incorrect
+          res.status(402).json({
+            message: "wrong password",
+          });
+        }
+        if (existingPassword) {
+          //if password is right
+          res.status(200).json({
+            message: "password correct",
+          });
+        }
+      }
+    } catch (error) {
+      console.log("error :>> ", error);
+      res.status(500).json({
+        message: "something went wrong",
+      });
+    }
+  }
+};
 
-export { signup };
-
-// name,
-// email,
-//? LINE 48: check savedUser?  am I sending the information of the user back if I write savedUser? CHECK!
-
-//  res.status(201).json({
-//     message: "user registered!!",
-//     user: {
-//       name: savedUser.userName,
-//       email: savedUser.email,
-//       // userImage: savedUser.userImage,
-//     },
-//   });
-//  else {
-//     res.status(500).json({
-//       message: "something went wrong",
-//     });
+export { signup, login };

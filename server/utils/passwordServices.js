@@ -10,5 +10,11 @@ const encryptPassword = async (password) => {
     console.log("error :>> ", error);
   }
 };
+const verifyPassword = async (rawPassword, hashedPassword) => {
+  //method taken from bcrypt will result in a boolean
+  const isPasswordCorrect = bcrypt.compare(rawPassword, hashedPassword);
 
-export { encryptPassword };
+  return isPasswordCorrect;
+};
+
+export { encryptPassword, verifyPassword };
