@@ -46,6 +46,18 @@ const signup = async (req, res) => {
     });
   }
 
+  //FIXME - ANCHOR!valid email-format?
+  const isValidEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Test the email against the regular expression
+    return emailRegex.test(email);
+  };
+  if (!isValidEmail(req.body.email)) {
+    return res.status(400).json({ error: "Invalid email format." });
+  }
+
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {
     //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash password, 2nd save user, 3rd reponse to the client
@@ -110,6 +122,21 @@ const login = async (req, res) => {
           res.status(200).json({
             message: "password correct",
           });
+
+          //generate Token
+          const token = issueToken(existingUser._id);
+          if (token) {
+            res.status(200).json({
+              message: "user successfully logged in",
+              user: {
+                userName: existingUser.userName,
+                email: existingUser.email,
+                userImage: existingUser.userImage,
+                id: existingUser._id,
+              },
+              token,
+            });
+          }
         }
       }
     } catch (error) {
