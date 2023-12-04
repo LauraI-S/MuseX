@@ -17,15 +17,15 @@ import { encryptPassword, verifyPassword } from "../utils/passwordServices.js";
 //     });
 //   }
 // };
-const number = 1;
+// const number = 1;
 
-if (number === 1) {
-  console.log("hi");
-}
+// if (number === 1) {
+//   console.log("hi");
+// }
 
-if (number !== 1) {
-  console.log("hello");
-}
+// if (number !== 1) {
+//   console.log("hello");
+// }
 
 const signup = async (req, res) => {
   console.log("register controller working :>> ");
@@ -44,6 +44,7 @@ const signup = async (req, res) => {
   if (existingUser) {
     res.status(200).json({
       message: "email already exists",
+      //FIXME - show that alert in frontend
     });
   }
 

@@ -61,9 +61,9 @@ function SignUp() {
       .catch((error) => console.log("error", error));
   };
   return (
-    <div className="container fancy-container">
+    <div className="container">
       <br />
-      <div className="registration-container fancy-form-container">
+      <div className="registration-container form-container">
         <h1 className="text-center">SIGN UP</h1>
         <form onSubmit={signUp}>
           <p className="text-center">
@@ -86,7 +86,6 @@ function SignUp() {
               name="email"
               onChange={handleSignupInputChange}
               className="form-control"
-              required
             />
           </div>
           <div className="form-group">
@@ -97,10 +96,9 @@ function SignUp() {
               name="password"
               onChange={handleSignupInputChange}
               className="form-control"
-              required
             />
             <div className="password-toggle" onClick={togglePasswordVisibility}>
-              {showPassword ? "Rather hide" : "Show me that"} password
+              {showPassword ? "Rather hide my" : "Show me that"} password
             </div>
           </div>
           <Button type="submit" className="btn-primary btn-block">
