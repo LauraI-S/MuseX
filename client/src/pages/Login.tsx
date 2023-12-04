@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 type LoginCredentialsType= {
@@ -11,7 +11,9 @@ function Login() {
   const [email, setEmail] = useState(''); // setting the state for my eamils looking for changes
   const [password, setPassword] = useState(''); // state for my password
   const [passwordType, setPasswordType] = useState('password'); // setting the state for hiding/showing my password--> it is set to hide the password
-//creating a function that´s being trigered in case the sth changes within the emails and also saves the state of that email
+  const [loginCredentials, setLoginCredentials] = useState<LoginCredentialsType | null>(null);
+
+  //creating a function that´s being trigered in case the sth changes within the emails and also saves the state of that email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -28,6 +30,14 @@ function Login() {
     e.preventDefault();
   };
 
+  const handleLoginInputChange= (e:ChangeEvent<FormControlElement>) => {
+    console.log('e.target.value :>> ', e.target.value);
+  }
+
+  const login = () => {
+    console.log('loginCredentials :>> ', loginCredentials);
+  }
+
   return (
     <Container>
       <Row className="justify-content-md-center">
@@ -42,8 +52,9 @@ function Login() {
                   type="text"
                   placeholder="Enter your e-mail..."
                   value={email}
-                  onChange={handleEmailChange}
-                  required
+                  name="email"
+                  onChange={handleLoginInputChange}
+
                 />
               </Form.Group>
               <Form.Group controlId="password">
@@ -52,8 +63,9 @@ function Login() {
                   type={passwordType}
                   placeholder="Enter your password..."
                   value={password}
-                  onChange={handlePasswordChange}
-                  required
+                  name= "password"
+                  onChange={handleLoginInputChange}
+
                 />
                 <Form.Text
                   className="text-muted"
