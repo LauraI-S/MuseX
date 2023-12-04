@@ -1,4 +1,5 @@
 import userModel from "../Model/userModel.js";
+import { issueToken } from "../utils/jwt.js";
 import { encryptPassword, verifyPassword } from "../utils/passwordServices.js";
 
 // const getAllUsers = async (req, res) => {
@@ -119,9 +120,6 @@ const login = async (req, res) => {
         }
         if (existingPassword) {
           //if password is right
-          res.status(200).json({
-            message: "password correct",
-          });
 
           //generate Token
           const token = issueToken(existingUser._id);

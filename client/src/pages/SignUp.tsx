@@ -53,7 +53,6 @@ function SignUp() {
       method: "POST",
       headers: myHeaders,
       body: urlencoded,
-      redirect: "follow",
     };
 
     fetch("http://localhost:4000/api/users/signup", requestOptions)

@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordType, setPasswordType] = useState('password');
+type LoginCredentialsType= {
+  // userName: string;
+    email: string;
+    password: string;
 
+}
+function Login() {
+  const [email, setEmail] = useState(''); // setting the state for my eamils looking for changes
+  const [password, setPassword] = useState(''); // state for my password
+  const [passwordType, setPasswordType] = useState('password'); // setting the state for hiding/showing my password--> it is set to hide the password
+//creating a function that´s being trigered in case the sth changes within the emails and also saves the state of that email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
+// similar to the emailchange before only for pw
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
+// function, that is being called if you click on the text below pw-field
   const togglePasswordVisibility = () => {
     setPasswordType((prevType) => (prevType === 'password' ? 'text' : 'password'));
   };
-
+// this function is being called in case the formular is being sent 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
