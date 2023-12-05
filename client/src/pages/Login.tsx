@@ -54,10 +54,21 @@ const requestOptions = {
       if (response.ok) {
         const result = await response.json();
         console.log('result :>> ', result);
+        // !checking if we have a token -> if yes: storing it in our localstorage (which is basically an "object within js that allows us to save key/value pairs in the browser")
+        if (result.token) {
+          localStorage.setItem("token", result.token);
+          //set your user object with the user information => now the token is stored in our browser: Applications/Local Storage/doubleclick on url
+        }
+      } else {
+        const result = await response.json();
+        console.log('result not ok:>> ', result);
+        alert(result.message);
       }
+      
       if (!response.ok) {
         const result = await response.json();
         console.log('result not ok:>> ', result);
+        alert(result.message);
       }
     } catch (error) {
       console.log('error :>> ', error);
