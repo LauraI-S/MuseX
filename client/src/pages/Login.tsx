@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 type LoginCredentialsType= {
   // userName: string;
@@ -19,16 +19,50 @@ const [loginCredentials, setLoginCredentials] = useState<LoginCredentialsType | 
   const handleLoginInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const propertyValue = e.target.value;
     const propertyName = e.target.name;
-    console.log('propertyName,propertyValue :>> ', propertyName, propertyValue);
+    // console.log('propertyName,propertyValue :>> ', propertyName, propertyValue);
     
     //->State (Zustand) used by the handleLoginInputChange-function saves data that might change! the "!" makes sure that it is not set to "null"-which is unwahrscheinlich beacause it is already in a setter-form which means something is happening to it,right?
-    setLoginCredentials({ ...loginCredentials!, [propertyName]: propertyValue })
+    //... spread-operator, ("!") non- null-assertion (TS)
+  setLoginCredentials({
+      ...loginCredentials!,
+      [propertyName]: propertyValue,
+      });  
   };
 
 //! my Function to handle the login form submission
-  const login = (e) => {
+  const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //prevents default behaviour to reload the page when a form is submitted
     console.log('loginCredentials :>> ', loginCredentials);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    //(!) making sure that loginCredentials is not null when called 
+urlencoded.append("email", loginCredentials!.email);
+urlencoded.append("password", loginCredentials!.password);
+
+const requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: urlencoded,
+};
+    try {
+      const response = await fetch
+        ("http://localhost:4000/api/users/login",
+          requestOptions);
+      console.log('response :>> ', response);
+      if (response.ok) {
+        const result = await response.json();
+        console.log('result :>> ', result);
+      }
+      if (!response.ok) {
+        const result = await response.json();
+        console.log('result not ok:>> ', result);
+      }
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+    //TODO - set user with userinformation in Authcontext with 
   };
 
 
@@ -39,25 +73,25 @@ const [loginCredentials, setLoginCredentials] = useState<LoginCredentialsType | 
         <h1 className="text-center">LOG IN</h1>
         <form onSubmit={login}>
           <p className="text-center">Enter your credentials below to log in:</p>
-        //! email-Input
+         {/* email-Input */}
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
               type="text"
               placeholder="Enter your e-mail..."
-              value={loginCredentials.email}
+              // value={loginCredentials}
               name="email"
               onChange={handleLoginInputChange}
             />
           </div>
 
-     //!Password-Input
+     {/* !Password-Input */}
           <div className="form-group">
             <label htmlFor="password">Password:</label>
             <input
-              type="password"
+              type={showPassword ? "hide" : "password"}
               placeholder="Enter your password..."
-              value={loginCredentials.password}
+              // value={loginCredentials}
               name="password"
               onChange={handleLoginInputChange}
             />
