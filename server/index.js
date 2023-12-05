@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import musicianRoute from "../server/routes/musicianRoute.js";
 import userRoute from "../server/routes/userRoute.js";
 import * as dotenv from "dotenv";
+import passport from "passport";
 
 dotenv.config();
 const router = express.Router();
@@ -34,6 +35,8 @@ const addMiddlewares = () => {
       extended: true,
     })
   );
+  cloudinaryConfig();
+  app.use(passport);
 };
 //!Routes Configuration
 const addRoutes = () => {
