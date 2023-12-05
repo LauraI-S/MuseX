@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 type LoginCredentialsType= {
   // userName: string;
@@ -75,6 +75,26 @@ const requestOptions = {
     }
     //TODO - set user with userinformation in Authcontext with 
   };
+  //!building functionality to be able to go to the localstorage and check if there´s a token
+
+  const getToken = () => {
+    const token = localStorage.getItem("token")
+    return token
+  }
+
+  const isUserLoggedIn = () => {
+    const token = getToken()
+    return token ? true : false;
+  };
+  useEffect(() => {
+    const isUserLogged = isUserLoggedIn()
+    if (isUserLogged) {
+      console.log('%c user is logged in :>> ', "color: green");
+    } else {
+        console.log('%c user is not logged in :>> ', "color: red");
+    }
+  }, [])
+  
 
 
   return (
