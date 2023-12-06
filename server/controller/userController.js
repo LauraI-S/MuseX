@@ -148,6 +148,24 @@ const login = async (req, res) => {
 };
 const getUserProfile = async (req, res) => {
   console.log("getprofile route working :>> ");
+  console.log("req :>> ", req.user);
+
+  if (req.user) {
+    res.status(200).json({
+      message: "user profile",
+      user: {
+        id: req.user._id,
+        email: req.user.email,
+        userName: req.user.userName,
+        userImage: req.user.userImage,
+      },
+    });
+  }
+  if (!req.user) {
+    req.status(400).json({
+      message: "something went wrong ...Login again",
+    });
+  }
 };
 
 export { signup, login, getUserProfile };

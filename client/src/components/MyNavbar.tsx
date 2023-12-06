@@ -57,6 +57,13 @@ const MyNavbar = ({ user, logout }) => {
                 >
                   Signup
                 </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/profile"
+                  onClick={() => setExpanded(false)}
+                >
+                  Profile
+                </Nav.Link>
               </>
             )}
           </Nav>

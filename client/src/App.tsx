@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import DetailsCard from "./pages/DetailsCard";
 import { Button } from "react-bootstrap";
 import MyNavbar from "./components/MyNavbar";
+import Profile from "./pages/Profile";
 
 function App() {
   //ANCHOR start creating AuthContext!
@@ -61,6 +62,7 @@ function App() {
           <Route path="/details" element={<DetailsCard />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login logout={logout} />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>
