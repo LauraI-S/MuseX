@@ -1,5 +1,6 @@
 import express from "express";
-import { signup, login } from "../controller/userController.js";
+import { signup, login, getUserProfile } from "../controller/userController.js";
+import jwtAuthorization from "../middlewares/jwtAuthorization.js";
 
 const router = express.Router();
 
@@ -7,5 +8,6 @@ const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
+router.get("/profile", jwtAuthorization, getUserProfile);
 
 export default router;

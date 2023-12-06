@@ -6,6 +6,7 @@ import musicianRoute from "../server/routes/musicianRoute.js";
 import userRoute from "../server/routes/userRoute.js";
 import * as dotenv from "dotenv";
 import passport from "passport";
+import passportConfig from "./config/passport.js";
 
 dotenv.config();
 const router = express.Router();
@@ -35,11 +36,13 @@ const addMiddlewares = () => {
       extended: true,
     })
   );
-  cloudinaryConfig();
-  app.use(passport);
+  // cloudinaryConfig();
+  passportConfig(passport); //imported from passport.js
+  // passport.use(JwtStrategy); would be also a way to "call" passport
 };
 //!Routes Configuration
 const addRoutes = () => {
+  app.use("/api", router);
   app.use("/api/musicians", musicianRoute);
   app.use("/api/users", userRoute);
 };
@@ -71,12 +74,12 @@ app.use(
   })
 );
 
-app.use("/api", router);
-router.get("/test", (req, res) => {
-  res.json({
-    message: "this is my test route",
-  });
-});
+// app.use("/api", router);
+// router.get("/test", (req, res) => {
+//   res.json({
+//     message: "this is my test route",
+//   });
+// });
 
 DBConnection();
 

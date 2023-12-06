@@ -146,5 +146,8 @@ const login = async (req, res) => {
     }
   }
 };
+const getUserProfile = async (req, res) => {
+  console.log("getprofile route working :>> ");
+};
 
-export { signup, login };
+export { signup, login, getUserProfile };
