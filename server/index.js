@@ -7,6 +7,7 @@ import userRoute from "../server/routes/userRoute.js";
 import * as dotenv from "dotenv";
 import passport from "passport";
 import passportConfig from "./config/passport.js";
+import cloudinaryConfig from "./config/cloudinary.js";
 
 dotenv.config();
 const router = express.Router();
@@ -36,7 +37,7 @@ const addMiddlewares = () => {
       extended: true,
     })
   );
-  // cloudinaryConfig();
+  cloudinaryConfig();
   passportConfig(passport); //imported from passport.js
   // passport.use(JwtStrategy); would be also a way to "call" passport
 };

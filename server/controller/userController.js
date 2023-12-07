@@ -1,31 +1,23 @@
 import userModel from "../Model/userModel.js";
 import { issueToken } from "../utils/jwt.js";
 import { encryptPassword, verifyPassword } from "../utils/passwordServices.js";
+import { v2 as cloudinary } from "cloudinary";
 
-// const getAllUsers = async (req, res) => {
-//   try {
-//     const users = await userModel.find({});
-//     if (users) {
-//       return res.status(200).json({
-//         users: users,
-//         user: users.length,
-//       });
-//     }
-//   } catch (err) {
-//     return res.json({
-//       errorMessage: err,
-//     });
-//   }
-// };
-// const number = 1;
-
-// if (number === 1) {
-//   console.log("hi");
-// }
-
-// if (number !== 1) {
-//   console.log("hello");
-// }
+const imageUpload = async (req, res) => {
+  // console.log("route working :>> ");
+  // console.log("req :>> ", req);
+  console.log("req.file :>> ", req.file);
+  try {
+    // Upload the image
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "profile_images",
+    });
+    console.log("result".bgBlue, result);
+    // return result.public_id;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const signup = async (req, res) => {
   console.log("register controller working :>> ");
@@ -168,4 +160,29 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-export { signup, login, getUserProfile };
+export { imageUpload, signup, login, getUserProfile };
+
+// const getAllUsers = async (req, res) => {
+//   try {
+//     const users = await userModel.find({});
+//     if (users) {
+//       return res.status(200).json({
+//         users: users,
+//         user: users.length,
+//       });
+//     }
+//   } catch (err) {
+//     return res.json({
+//       errorMessage: err,
+//     });
+//   }
+// };
+// const number = 1;
+
+// if (number === 1) {
+//   console.log("hi");
+// }
+
+// if (number !== 1) {
+//   console.log("hello");
+// }
