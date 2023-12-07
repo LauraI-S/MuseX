@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  // _id: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   default: mongoose.Types.ObjectId,
-  // },
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: mongoose.Types.ObjectId,
+  },
   name: {
     type: String,
     required: true,
@@ -18,10 +18,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // userImage: {
-  //   type: String,
-  //   required:true,
-  // }
+  userImage: {
+    type: String,
+    required: true,
+  },
   // favoriteMusicians: [
   //   {
   //     musician: { type: mongoose.Schema.Types.String, ref: "musician" },

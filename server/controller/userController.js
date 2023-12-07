@@ -1,3 +1,4 @@
+import musicianModel from "../Model/musicianModel.js";
 import userModel from "../Model/userModel.js";
 import { issueToken } from "../utils/jwt.js";
 import { encryptPassword, verifyPassword } from "../utils/passwordServices.js";
@@ -7,15 +8,26 @@ const imageUpload = async (req, res) => {
   // console.log("route working :>> ");
   // console.log("req :>> ", req);
   console.log("req.file :>> ", req.file);
-  try {
-    // Upload the image
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "profile_images",
+  if (req.file) {
+    try {
+      //! Upload the image
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "profile_images", //!<-- this creates a folder within cloudinary that stores the image
+      });
+      console.log("result".bgBlue, result);
+      res.status(201).json({
+        message: "image uploaded",
+        userImage: result.secure_url,
+      });
+      // return result.public_id;
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    //TODO - figure out how to send this error to the user
+    res.status(500).json({
+      message: "file not supported",
     });
-    console.log("result".bgBlue, result);
-    // return result.public_id;
-  } catch (error) {
-    console.error(error);
   }
 };
 
@@ -63,7 +75,7 @@ const signup = async (req, res) => {
       const newUser = new userModel({
         name: req.body.userName,
         email: req.body.email,
-        // image: req.body.image
+        image: req.body.image,
         password: hashedPassword,
       });
 
@@ -80,6 +92,7 @@ const signup = async (req, res) => {
     }
   }
 };
+
 const login = async (req, res) => {
   console.log("login route works :>> ");
   const { email, password } = req.body;
@@ -159,8 +172,68 @@ const getUserProfile = async (req, res) => {
     });
   }
 };
+// const deleteUser = async (req, res) => {
+//   try {
+//     console.log("delete route works :>> ", req.params.userId);
 
-export { imageUpload, signup, login, getUserProfile };
+//     const userIdToDelete = req.params.userId;
+//     console.log("Deleting user with ID:", userIdToDelete);
+
+//     const deletedUser = await userModel.findOneAndDelete({
+//       userId: userIdToDelete,
+//     });
+
+//     console.log("Deleted user:", deletedUser);
+
+//     if (!deletedUser) {
+//       return res.status(404).json({
+//         message: "User not found. Are you sure you want to delete this user?",
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "User deleted successfully",
+//       deletedUser,
+//     });
+//   } catch (error) {
+//     console.error("Error deleting user:", error);
+//     res.status(500).json({
+//       message: "Internal server error",
+//     });
+//   }
+// };
+const deleteUser = async (req, res) => {
+  console.log("req.user :>> ", req.user);
+  try {
+    // console.log("deleting - route works :>> ", req.params._id);
+    // const userIdToDelete = req.params.userId;
+    const user = req.user;
+    const deletedUser = await userModel.findOneAndDelete({
+      _id: user._id,
+    });
+
+    if (!deletedUser) {
+      return res.status(404).json({
+        message: "User not found. Are you sure you want to delete this user?",
+      });
+    }
+    // await musicianModel.deleteOne({ user: user.id });
+    // console.log("user._id :>> ", user.id);
+    //FIXME - Ask Helene for help!!! this line is supposed to delete the user within the musician but would delete all of the musician
+
+    res.status(200).json({
+      message: "User deleted successfully",
+      deletedUser,
+    });
+  } catch (error) {
+    console.error("Error during deletion:", error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export { imageUpload, signup, login, getUserProfile, deleteUser };
 
 // const getAllUsers = async (req, res) => {
 //   try {

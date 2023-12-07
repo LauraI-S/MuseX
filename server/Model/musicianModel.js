@@ -39,7 +39,7 @@ const musicianSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  user: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
 });
 const musicianModel = mongoose.model("musician", musicianSchema);
 

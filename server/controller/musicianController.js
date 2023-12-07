@@ -1,10 +1,11 @@
 import musicianModel from "../Model/musicianModel.js";
 
+//!Controllerfunction:
 const getAllMusicians = async (req, res) => {
   try {
     const musicians = await musicianModel
       .find({})
-      .populate({ path: "user", select: ["name"] });
+      .populate({ path: "user", select: ["name", " _id"] });
 
     if (musicians) {
       res.status(200).json({
@@ -27,26 +28,26 @@ const getAllMusicians = async (req, res) => {
   }
 };
 
-// const getMusiciansWithLikes = async (req, res) => {
-//   console.log("req :>> ".magenta, req.params.likes);
-//   const { likes } = req.params;
-//   console.log("likes :>> ", likes);
-//   if (req.params.likes) {
-//     try {
-//       const musiciansWithLikes = await musicianModel.find({
-//         likes: req.params.likes,
-//       });
-//       res.status(200).json({
-//         number: musiciansWithLikes.length,
-//       });
-//     } catch (error) {
-//       console.log("error :>> ", error);
-//       res.status(500).json({
-//         message: "something went wrong",
-//       });
-//     }
-//   }
-// };
+const getMusiciansWithLikes = async (req, res) => {
+  console.log("req :>> ".magenta, req.params.likes);
+  const { likes } = req.params;
+  console.log("likes :>> ", likes);
+  if (req.params.likes) {
+    try {
+      const musiciansWithLikes = await musicianModel.find({
+        likes: req.params.likes,
+      });
+      res.status(200).json({
+        number: musiciansWithLikes.length,
+      });
+    } catch (error) {
+      console.log("error :>> ", error);
+      res.status(500).json({
+        message: "something went wrong",
+      });
+    }
+  }
+};
 
 // const getMusiciansByInstruments = async (req, res) => {
 //   console.log("req :>> ".magenta, req.params.instrument);
@@ -91,4 +92,4 @@ const getAllMusicians = async (req, res) => {
 //   }
 // };
 
-export { getAllMusicians };
+export { getAllMusicians, getMusiciansWithLikes };
