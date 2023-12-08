@@ -1,9 +1,15 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button, InputGroup } from "react-bootstrap";
 import { getToken } from "../utils/token";
+import "../styles/Profile.css";
 
+type UserImageType = {
+  userImage: string;
+  user: User;
+};
 type User = {
   id: string;
+  password: string;
   email: string;
   userName: string;
   userImage: string;
@@ -17,14 +23,17 @@ type OkResponse = {
 function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | string>("");
+  const [newUser, setNewUser] = useState<User | null>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("e.target :>> ", e);
+    // console.log("e.target :>> ", e);
     const file = e.target.files?.[0] || "";
     setSelectedFile(file);
   };
   //TODO - I can reach the type of the images using files.type (and maybe let the user know, that the provided file-type is...?)
-  const uploadImage = async () => {
+
+  const uploadImage = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const formdata = new FormData();
     formdata.append("image", selectedFile);
 
@@ -38,7 +47,11 @@ function Profile() {
         "http://localhost:4000/api/users/imageupload",
         requestOptions
       );
-      const result = await response.json();
+      const result: UserImageType = await response.json();
+      const userImage: UserImageType = result.userImage;
+      console.log("result :>> ", result);
+      // setNewUser({ ...newUser!, [e.target.name]: e.target.value });
+      setNewUser(result.user);
     } catch (error) {
       console.log("error", error);
     }
@@ -47,7 +60,7 @@ function Profile() {
   const getProfile = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("you need log in");
+      alert("you need to log in first");
     }
     if (token) {
       const myHeaders = new Headers();
@@ -68,7 +81,7 @@ function Profile() {
     }
   };
 
-  const userID = user?.id;
+  // const userID = user?.id;
 
   const deleteUser = () => {
     const token = getToken();
@@ -100,20 +113,39 @@ function Profile() {
 
   return (
     <div>
-      <h3>User Profile</h3>
+      <h3>Create a Profile</h3>
 
-      <Button variant="secondary" onClick={deleteUser()}>
+      <Button variant="secondary" onClick={deleteUser}>
         Delete
       </Button>
-      <input type="file" onChange={handleInputChange} />
-      <Button variant="secondary"> upload picture</Button>
 
-      {user && (
-        <img
-          src={user.userImage}
-          alt={`picture from user ${user.userName}`}
-          style={{ width: "200px" }}
-        />
+      <div className="input-container">
+        <form onSubmit={uploadImage}>
+          <input type="file" onChange={handleInputChange} />
+          <Button variant="secondary" onClick={uploadImage}>
+            {" "}
+            upload picture
+          </Button>
+        </form>
+        {newUser && <img src={newUser.userImage} alt="user image" />}
+
+        {selectedFile && (
+          <img src={URL.createObjectURL(selectedFile)} alt="user image" />
+        )}
+      </div>
+      {newUser && (
+        <div className="user-info">
+          <h4>User Information</h4>
+          <p>
+            <strong>User ID:</strong> {newUser.id}
+          </p>
+          <p>
+            <strong>Email:</strong> {newUser.email}
+          </p>
+          <p>
+            <strong>Username:</strong> {newUser.userName}
+          </p>
+        </div>
       )}
     </div>
   );

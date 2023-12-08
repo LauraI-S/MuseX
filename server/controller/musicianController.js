@@ -28,6 +28,44 @@ const getAllMusicians = async (req, res) => {
   }
 };
 
+const getMusicianDetails = async (req, res) => {
+  console.log("musicianDetailRoute working :>> ");
+  try {
+    const musicians = await musicianModel.find({}).populate({
+      path: "user",
+      select: [
+        "name",
+        " _id",
+        "genre",
+        "instrument",
+        "summary",
+        "img",
+        "email",
+        "likes",
+      ],
+    });
+
+    if (musicians) {
+      res.status(200).json({
+        musicians: musicians,
+        number: musicians.length,
+      });
+    } else {
+      if (musicians.length === 0) {
+        res.status(200).json({
+          message: "Didn't find documents in the database",
+        });
+      }
+    }
+  } catch (err) {
+    console.log("error :>> ", err);
+    res.status(500).json({
+      message: "An error occurred while fetching musicians",
+      error: err.message,
+    });
+  }
+};
+
 const getMusiciansWithLikes = async (req, res) => {
   console.log("req :>> ".magenta, req.params.likes);
   const { likes } = req.params;
@@ -92,4 +130,4 @@ const getMusiciansWithLikes = async (req, res) => {
 //   }
 // };
 
-export { getAllMusicians, getMusiciansWithLikes };
+export { getAllMusicians, getMusiciansWithLikes, getMusicianDetails };

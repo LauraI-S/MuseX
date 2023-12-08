@@ -1,0 +1,21 @@
+.profile-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.image-container {
+    margin-top: 20px;
+}
+
+.image-wrapper {
+    margin-top: 10px;
+}
+
+.user-info {
+    margin-top: 20px;
+}
+
+.user-info h4 {
+    margin-bottom: 10px;
+}
