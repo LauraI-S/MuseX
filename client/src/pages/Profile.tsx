@@ -36,10 +36,14 @@ function Profile() {
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("image", selectedFile);
-
+    const headers = new Headers();
+    const token = getToken();
+    //!create if-condition if there´s token & else
+    headers.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
       method: "POST",
       body: formdata,
+      headers: headers,
     };
 
     try {

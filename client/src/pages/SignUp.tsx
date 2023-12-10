@@ -1,17 +1,17 @@
 import React, { ChangeEvent, useState } from "react";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../styles/SignUp.css"; // Import a CSS file for custom styling
 
 export interface User {
-  userName: string;
-    email: string;
-    password: string;
-    userImage: string;
+  name: string;
+  email: string;
+  password: string;
+  userImage: string;
 }
 
 function SignUp() {
   const [newUser, setNewUser] = useState<User>({
-    userName: "",
+    name: "",
     email: "",
     password: "",
     userImage: "",
@@ -39,7 +39,7 @@ function SignUp() {
     myHeaders.append("X-API-Key", "{{token}}");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("userName", newUser.userName);
+    urlencoded.append("name", newUser.name);
     urlencoded.append("email", newUser.email);
     urlencoded.append("password", newUser.password);
     urlencoded.append(
@@ -70,10 +70,10 @@ function SignUp() {
             Fill in the information below to sign up:
           </p>
           <div className="form-group">
-            <label htmlFor="userName">Username:</label>
+            <label htmlFor="name">Username:</label>
             <input
               type="text"
-              name="userName"
+              name="name"
               onChange={handleSignupInputChange}
               className="form-control"
             />

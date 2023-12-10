@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId,
-  },
   name: {
     type: String,
     required: true,
@@ -20,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   userImage: {
     type: String,
-    required: true,
+    required: false,
   },
   favoriteMusicians: [
     {

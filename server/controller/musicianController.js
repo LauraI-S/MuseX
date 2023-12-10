@@ -31,19 +31,21 @@ const getAllMusicians = async (req, res) => {
 const getMusicianDetails = async (req, res) => {
   console.log("musicianDetailRoute working :>> ");
   try {
-    const musicians = await musicianModel.find({}).populate({
-      path: "user",
-      select: [
-        "name",
-        " _id",
-        "genre",
-        "instrument",
-        "summary",
-        "img",
-        "email",
-        "likes",
-      ],
-    });
+    const musicians = await musicianModel
+      .find({})
+      .populate({
+        path: "user",
+        select: [
+          "name",
+          " _id",
+          "genre",
+          "instrument",
+          "summary",
+          "img",
+          "email",
+          "likes",
+        ],
+      });
 
     if (musicians) {
       res.status(200).json({

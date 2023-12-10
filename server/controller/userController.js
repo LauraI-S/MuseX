@@ -14,6 +14,7 @@ const imageUpload = async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "profile_images", //!<-- this creates a folder within cloudinary that stores the image
       });
+
       console.log("result".bgBlue, result);
       res.status(201).json({
         message: "image uploaded",
@@ -45,6 +46,7 @@ const signup = async (req, res) => {
   }
   //if the req.body.email exists (an email is being sent from the client), then we check IF the email exists already in the database
   const existingUser = await userModel.findOne({ email: req.body.email });
+  console.log("existingUser function finished :>> ");
   if (existingUser) {
     res.status(200).json({
       message: "email already exists",
@@ -63,7 +65,7 @@ const signup = async (req, res) => {
   if (!isValidEmail(req.body.email)) {
     return res.status(400).json({ error: "Invalid email format." });
   }
-
+  console.log("valid email-function completed :>> ");
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {
     //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash password, 2nd save user, 3rd reponse to the client
@@ -73,13 +75,14 @@ const signup = async (req, res) => {
     if (hashedPassword) {
       //using model, saving information, storing in database
       const newUser = new userModel({
-        name: req.body.userName,
+        name: req.body.name,
         email: req.body.email,
         image: req.body.image,
         password: hashedPassword,
       });
-
+      console.log("new user object created :>> ");
       const savedUser = await newUser.save();
+      console.log("new user saved :>> ");
       console.log("savedUser :>> ", savedUser);
       res.status(201).json({
         message: "user registered",

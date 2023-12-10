@@ -47,8 +47,7 @@ function Home() {
   return (
     <div className="container">
       <div className="row mx-md-auto"></div>
-      <Link to="/signup">SignUp</Link> |<Link to="/details">Details</Link> |
-      <Link to="/login">Login</Link> |<p>This is the home page.</p>
+      <p>This is the home page.</p>
       {musicians &&
         musicians.map((musician) => (
           <MyCard
