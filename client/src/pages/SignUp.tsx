@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import "../styles/SignUp.css"; // Import a CSS file for custom styling
+import { AuthContext } from "../context/AuthContext";
 
 export interface User {
   name: string;
@@ -10,6 +11,7 @@ export interface User {
 }
 
 function SignUp() {
+  const { signup, user } = useContext(AuthContext);
   const [newUser, setNewUser] = useState<User>({
     name: "",
     email: "",
@@ -17,6 +19,7 @@ function SignUp() {
     userImage: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [registrationStatus, setRegistrationStatus] = useState(null);
 
   const handleSignupInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     //!the following line basically combines the new user-information with existing information
@@ -33,32 +36,39 @@ function SignUp() {
   //!preventing new page-refresh by default, console-logging my new user
   const signUp = (e) => {
     e.preventDefault();
-    console.log("newUser :>> ", newUser);
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    myHeaders.append("X-API-Key", "{{token}}");
+    signUp(newUser.email, newUser.name, newUser.password);
+    // console.log("newUser :>> ", newUser);
+    // const myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    // myHeaders.append("X-API-Key", "{{token}}");
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("name", newUser.name);
-    urlencoded.append("email", newUser.email);
-    urlencoded.append("password", newUser.password);
-    urlencoded.append(
-      "image",
-      newUser.userImage
-        ? newUser.userImage
-        : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
-    );
+    // const urlencoded = new URLSearchParams();
+    // urlencoded.append("name", newUser.name);
+    // urlencoded.append("email", newUser.email);
+    // urlencoded.append("password", newUser.password);
+    // urlencoded.append(
+    //   "image",
+    //   newUser.userImage
+    //     ? newUser.userImage
+    //     : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
+    // );
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-    };
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: urlencoded,
+    // };
 
-    fetch("http://localhost:4000/api/users/signup", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log("result", result))
-      .catch((error) => console.log("error", error));
+    // fetch("http://localhost:4000/api/users/signup", requestOptions)
+    //   .then((response) => response.text())
+    //   .then((result) => {
+    //     console.log("result", result);
+    //     window.alert("You have successfully registered!");
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //     window.alert("Registration failed. Please try again.");
+    //   });
   };
   return (
     <div className="container">

@@ -130,7 +130,7 @@ const login = async (req, res) => {
         if (existingPassword) {
           //if password is right
 
-          //generate Token
+          //create Token
           const token = issueToken(existingUser._id);
           if (token) {
             res.status(200).json({

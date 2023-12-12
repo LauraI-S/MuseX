@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MyCard from "../components/MyCard";
 import "../styles/MyCard.css";
+import { AuthContext } from "../context/AuthContext";
 
 type Musician = {
   _id: any;
@@ -14,6 +15,8 @@ type Musician = {
 };
 
 function Home() {
+  const { user } = useContext(AuthContext);
+  console.log("user :>> ", user?.name);
   console.log("component run");
   const [musicians, setMusicians] = useState<[Musician] | null>(null);
 
@@ -34,14 +37,6 @@ function Home() {
     getMusicians();
   }, []);
 
-  //       {  const greeting = (musician) => {
-  //   const name = musician ? musician.name : "stranger";
-  //   return `Howdy, ${name}`;
-  // };
-
-  // console.log(greeting({ name: "Alice" })); // "Howdy, Alice"
-  // console.log(greeting(null));}
-
   console.log("musicians :>> ", musicians);
 
   return (
@@ -61,36 +56,3 @@ function Home() {
 }
 
 export default Home;
-//   return (
-//     <div>
-//       <Link to="/signup">SignUp</Link> |
-//       <Link to="/details"> Details</Link> |
-//       <Link to="/login"> Login</Link> |
-
-//       {console.log("%c JSX renders", "color:green")}
-//       <p>This is the home page.</p>
-
-{
-  /* {musicians ? musicians.map((musician) => {
-        return (
-          <p>{musician.email}</p>
-        )
-      }) : <p>nomusicians to be dispalayed</p>} */
-}
-
-{
-  /* <p> const myMusicians = result.musicians.map((musicians) => );
-        console.log('myMusicians :>> ', myMusicians);
-
-      </p> */
-}
-
-//       {musicians &&
-//         musicians.map((musician) => (
-//           <MyCard key={musician._id} name={musician.name} img={musician.img} instrument={musician.instrument} />
-//         ))}
-//     </div>
-//   );
-// }
-
-//!

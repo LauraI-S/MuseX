@@ -13,7 +13,12 @@ const router = express.Router();
 
 // router.get("/users", getAllUsers);
 
-router.post("/imageUpload", multerUpload.single("image"), imageUpload);
+router.post(
+  "/imageUpload",
+  jwtAuthorization,
+  multerUpload.single("image"),
+  imageUpload
+);
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/profile", jwtAuthorization, getUserProfile);
