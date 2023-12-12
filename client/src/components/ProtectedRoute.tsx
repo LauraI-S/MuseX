@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { AuthContext } from "../context/AuthContext";
-// import { isUserAuth } from "../utilities/isUserAuth.js";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-// import hamburger from "../images-videos/hamburger.jpg";
 
 type User = {
   id: string;

@@ -52,7 +52,7 @@ function App() {
     <>
       <Router>
         <MyNavbar user={user} logout={logout} />
-        <h1>muse-X</h1>
+        <h1>Muse-X</h1>
 
         <Button variant="secondary" onClick={logout}>
           logout

@@ -63,7 +63,7 @@ const signup = async (req, res) => {
     return emailRegex.test(email);
   };
   if (!isValidEmail(req.body.email)) {
-    return res.status(400).json({ error: "Invalid email format." });
+    return res.status(400).json({ alert (error: "Invalid email format.") });
   }
   console.log("valid email-function completed :>> ");
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)

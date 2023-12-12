@@ -13,10 +13,17 @@ type Musician = {
   summary: string;
   musician: Musician;
 };
+type User = {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
+  password: string;
+};
 
 function Home() {
   const { user } = useContext(AuthContext);
-  console.log("user :>> ", user?.name);
+  console.log("user :>> ", user);
   console.log("component run");
   const [musicians, setMusicians] = useState<[Musician] | null>(null);
 
@@ -42,6 +49,17 @@ function Home() {
   return (
     <div className="container">
       <div className="row mx-md-auto"></div>
+      <h2>Welcome {user?.name}!</h2>
+      {user ? (
+        <div>
+          <p>User ID: {user._id}</p>
+          <p>Name: {user.name}</p>
+          <p>Email: {user.email}</p>
+          {/* Add other user information as needed */}
+        </div>
+      ) : (
+        <p>Please log in to see your profile.</p>
+      )}
       <p>This is the home page.</p>
       {musicians &&
         musicians.map((musician) => (
