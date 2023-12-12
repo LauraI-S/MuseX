@@ -4,15 +4,15 @@ import { getToken } from "../utils/token";
 import "../styles/Profile.css";
 
 type UserImageType = {
-  userImage: string;
+  image: string;
   user: User;
 };
 type User = {
   id: string;
   password: string;
   email: string;
-  userName: string;
-  userImage: string;
+  name: string;
+  image: string;
 };
 
 type OkResponse = {
@@ -52,7 +52,7 @@ function Profile() {
         requestOptions
       );
       const result: UserImageType = await response.json();
-      const userImage: UserImageType = result.userImage;
+      const image: UserImageType = result.image;
       console.log("result :>> ", result);
       // setNewUser({ ...newUser!, [e.target.name]: e.target.value });
       setNewUser(result.user);
@@ -131,7 +131,7 @@ function Profile() {
             upload picture
           </Button>
         </form>
-        {newUser && <img src={newUser.userImage} alt="user image" />}
+        {newUser && <img src={newUser.image} alt="user image" />}
 
         {selectedFile && (
           <img src={URL.createObjectURL(selectedFile)} alt="user image" />
@@ -147,7 +147,7 @@ function Profile() {
             <strong>Email:</strong> {newUser.email}
           </p>
           <p>
-            <strong>Username:</strong> {newUser.userName}
+            <strong>Username:</strong> {newUser.name}
           </p>
         </div>
       )}

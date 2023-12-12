@@ -3,18 +3,18 @@ import "../styles/MyCard.css";
 
 type MyCardProps = {
   musician: MyCardProps;
-   _id: any;
+  _id: any;
   name: string;
   instrument: string[];
   hasEquipment: boolean;
-  img: string;
+  image: string;
   summary: string;
 };
 
 const MyCard: React.FC<MyCardProps> = ({ musician }) => {
   return (
     <div className="my-card">
-      <img src={musician.img} alt={musician.name} />
+      <img src={musician.image} alt={musician.name} />
       <div>
         <p>{musician.name}</p>
         <p>{musician.instrument.join(", ")}</p>
@@ -24,7 +24,6 @@ const MyCard: React.FC<MyCardProps> = ({ musician }) => {
 };
 
 export default MyCard;
-
 
 // import React from "react";
 // import { Link } from "react-router-dom";
@@ -66,9 +65,6 @@ export default MyCard;
 
 // export default MyCard;
 
-
-
-
 // import React from "react";
 // // import "../styles/MyCard.css"
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -101,10 +97,8 @@ export default MyCard;
 
 // export default MyCard;
 
-
-
-
-{/* <ul key={musician._id}>
+{
+  /* <ul key={musician._id}>
                             <li>Name: {musician.name}</li>
                             <li>Img: <img src={musician.img} alt={musician.name} style={{ maxWidth: '100%' }} /></li>
             <li>Instrument: {musician.instrument.join(", ")}</li>
@@ -113,4 +107,5 @@ export default MyCard;
                             <li>Has Equipment: {musician.hasEquipment ? "Yes" : "No"}</li>
                         </ul>
                     )
-                } */}
+                } */
+}

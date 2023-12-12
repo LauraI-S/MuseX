@@ -13,59 +13,66 @@ import DetailsCard from "./pages/DetailsCard";
 import { Button } from "react-bootstrap";
 import MyNavbar from "./components/MyNavbar";
 import Profile from "./pages/Profile";
+import { AuthContext } from "../context/AuthContext";
+import AuthContextProvider from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  //ANCHOR start creating AuthContext!
-  const [user, setUser] = useState(false);
+  // //ANCHOR start creating AuthContext!
+  // const [user, setUser] = useState(false);
 
-  //the two functions below, they probably belong better to another file (utilities, context...etc..)
-  const getToken = () => {
-    const token = localStorage.getItem("token");
-    return token;
-  };
-  const isUserLoggedIn = () => {
-    const token = getToken();
+  // //the two functions below, they probably belong better to another file (utilities, context...etc..)
+  // const getToken = () => {
+  //   const token = localStorage.getItem("token");
+  //   return token;
+  // };
+  // const isUserLoggedIn = () => {
+  //   const token = getToken();
 
-    return token ? true : false;
-  };
+  //   return token ? true : false;
+  // };
 
   // const handleLogout = () => {
-  //     logout();
-  //     Navigate("/")
+  //   logout();
+  //   Navigate("/");
   // };
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(false);
-  };
-  useEffect(() => {
-    const isUserLogged = isUserLoggedIn();
-    if (isUserLogged) {
-      console.log("%c user is logged in", "color:green");
-      setUser(true);
-    } else {
-      console.log("%c user is NOT logged in", "color:red");
-      setUser(false);
-    }
-  }, [user]);
+  // const logout = () => {
+  //   localStorage.removeItem("token");
+  //   setUser(false);
+  // };
+  // useEffect(() => {
+  //   const isUserLogged = isUserLoggedIn();
+  //   if (isUserLogged) {
+  //     console.log("%c user is logged in", "color:green");
+  //     setUser(true);
+  //   } else {
+  //     console.log("%c user is NOT logged in", "color:red");
+  //     setUser(false);
+  //   }
+  // }, [user]);
 
   return (
-    <>
+    <AuthContextProvider>
       <Router>
-        <MyNavbar user={user} logout={logout} />
+        <MyNavbar />
         <h1>Muse-X</h1>
-
-        <Button variant="secondary" onClick={logout}>
-          logout
+        <Button variant="secondary" onClick={() => console.log("Logout")}>
+          Logout
         </Button>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/details" element={<DetailsCard />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login logout={logout} />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route
+            path="/profile"
+            element={<ProtectedRoute element={<Profile />} />}
+          />
+          //TODO - Add more protected routes such as ...whatever?
         </Routes>
       </Router>
-    </>
+    </AuthContextProvider>
   );
 }
 

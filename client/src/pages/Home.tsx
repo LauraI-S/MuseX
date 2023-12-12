@@ -52,8 +52,6 @@ function Home() {
       <h2>Welcome {user?.name}!</h2>
       {user ? (
         <div>
-          <p>User ID: {user._id}</p>
-          <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           {/* Add other user information as needed */}
         </div>

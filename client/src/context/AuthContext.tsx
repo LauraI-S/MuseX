@@ -3,11 +3,8 @@ import React, {
   useState,
   useContext,
   useEffect,
-  FormEvent,
   ReactNode,
 } from "react";
-import Home from "../pages/Home";
-import loginCredentials from "../pages/Login";
 
 type User = {
   _id: string;
@@ -17,25 +14,27 @@ type User = {
   password: string;
 };
 
-interface AuthContextProviderProps {
-  children: ReactNode;
-}
-
 interface AuthContextType {
   user: User | null;
   userName: string;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   signup: (email: string, name: string, password: string) => void;
   login: () => void;
+  getProfile: () => void;
 }
 
-// Create the authentication context
-export const AuthContext = createContext<AuthContextType>({});
+interface AuthContextProviderProps {
+  children: ReactNode;
+}
 
-// Provide a value from this context
-export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
+
+export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
 
   const getProfile = async () => {
@@ -43,9 +42,9 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("you need to log in first");
+      alert("You need to log in first");
       setUser(null);
-      return; // Exit the function early
+      return;
     }
 
     const myHeaders = new Headers();
@@ -65,6 +64,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       if (response.ok) {
         const result = await response.json();
         console.log("result userProfile :>> ", result);
+
+        // Update the user state with the fetched user profile
         setUser(result.user);
       } else {
         console.log("Error fetching user profile");
@@ -85,7 +86,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, []);
 
   const login = async () => {
-    setIsLoggedIn(false);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -112,8 +112,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         if (result.token) {
           localStorage.setItem("token", result.token);
           setUser(result.user);
-          console.log("user is set after login", result.user);
-          setIsLoggedIn(true);
         }
       } else {
         const result = await response.json();
@@ -125,14 +123,9 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
   };
 
-  useEffect(() => {
-    getProfile();
-  }, [user]);
-
   const signup = async (email: string, name: string, password: string) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    myHeaders.append("X-API-Key", "{{token}}");
 
     const urlencoded = new URLSearchParams();
     urlencoded.append("name", name);
@@ -149,28 +142,34 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       body: urlencoded,
     };
 
-    fetch("http://localhost:4000/api/users/signup", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/users/signup",
+        requestOptions
+      );
+
+      if (response.ok) {
+        const result = await response.json();
         console.log("result", result);
+
+        // Update the user state with the registered user information
+        setUser(result.user);
+        setUserName(result.user.name);
+
         window.alert("You have successfully registered!");
-      })
-      .catch((error) => {
-        console.log("error", error);
-        window.alert("Registration failed. Please try again.");
-      });
+      } else {
+        const result = await response.json();
+        console.log("result not ok:>> ", result);
+        alert(result.message);
+      }
+    } catch (error) {
+      console.log("error :>> ", error);
+      window.alert("Registration failed. Please try again.");
+    }
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        signup,
-        login,
-        userName,
-      }}
-    >
+    <AuthContext.Provider value={{ user, setUser, signup, login, getProfile }}>
       {children}
     </AuthContext.Provider>
   );

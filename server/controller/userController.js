@@ -63,13 +63,12 @@ const signup = async (req, res) => {
     return emailRegex.test(email);
   };
   if (!isValidEmail(req.body.email)) {
-    return res.status(400).json({ alert (error: "Invalid email format.") });
+    return res.status(400).json({ error: "Invalid email format." });
   }
   console.log("valid email-function completed :>> ");
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {
     //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash password, 2nd save user, 3rd reponse to the client
-
     //?encrypt password
     const hashedPassword = await encryptPassword(req.body.password);
     if (hashedPassword) {
@@ -86,7 +85,12 @@ const signup = async (req, res) => {
       console.log("savedUser :>> ", savedUser);
       res.status(201).json({
         message: "user registered",
-        savedUser,
+        user: {
+          _id: savedUser._id,
+          name: savedUser.name,
+          email: savedUser.email,
+          image: savedUser.image,
+        },
       });
     } else {
       res.status(500).json({
@@ -136,9 +140,9 @@ const login = async (req, res) => {
             res.status(200).json({
               message: "user successfully logged in",
               user: {
-                userName: existingUser.userName,
+                userName: existingUser.name,
                 email: existingUser.email,
-                userImage: existingUser.userImage,
+                userImage: existingUser.image,
                 id: existingUser._id,
               },
               token,
@@ -164,8 +168,8 @@ const getUserProfile = async (req, res) => {
       user: {
         id: req.user._id,
         email: req.user.email,
-        userName: req.user.userName,
-        userImage: req.user.userImage,
+        name: req.user.name,
+        image: req.user.image,
       },
     });
   }
