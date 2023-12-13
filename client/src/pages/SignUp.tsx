@@ -7,16 +7,16 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  userImage: string;
+  image: string;
 }
 
 function SignUp() {
-  const { signup, user } = useContext(AuthContext);
+  const { user, signUp } = useContext(AuthContext);
   const [newUser, setNewUser] = useState<User>({
     name: "",
     email: "",
     password: "",
-    userImage: "",
+    image: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(null);
@@ -34,8 +34,8 @@ function SignUp() {
   };
 
   //!preventing new page-refresh by default, console-logging my new user
-  const signUp = (e) => {
-    // e.preventDefault();
+  const handleSignUp = (e) => {
+    e.preventDefault();
     signUp(newUser.email, newUser.name, newUser.password);
     console.log("newUser :>> ", newUser);
     const myHeaders = new Headers();
@@ -48,8 +48,8 @@ function SignUp() {
     urlencoded.append("password", newUser.password);
     urlencoded.append(
       "image",
-      newUser.userImage
-        ? newUser.userImage
+      newUser.image
+        ? newUser.image
         : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
     );
 
@@ -75,7 +75,7 @@ function SignUp() {
       <br />
       <div className="registration-container form-container">
         <h1 className="text-center">SIGN UP</h1>
-        <form onSubmit={(e) => signUp(e)}>
+        <form onSubmit={(e) => handleSignUp(e)}>
           <p className="text-center">
             Fill in the information below to sign up:
           </p>

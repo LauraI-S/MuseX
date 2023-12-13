@@ -18,7 +18,7 @@ const imageUpload = async (req, res) => {
       console.log("result".bgBlue, result);
       res.status(201).json({
         message: "image uploaded",
-        userImage: result.secure_url,
+        image: result.secure_url,
       });
       // return result.public_id;
     } catch (error) {
@@ -142,7 +142,7 @@ const login = async (req, res) => {
               user: {
                 userName: existingUser.name,
                 email: existingUser.email,
-                userImage: existingUser.image,
+                image: existingUser.image,
                 id: existingUser._id,
               },
               token,

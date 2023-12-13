@@ -71,6 +71,7 @@ function Login({ logout }: LoginProps) {
         // !checking if we have a token -> if yes: storing it in our localstorage (which is basically an "object within js that allows us to save key/value pairs in the browser")
         if (result.token) {
           localStorage.setItem("token", result.token);
+          setLoginSuccess(true);
           //set your user object with the user information => now the token is stored in our browser: Applications/Local Storage/doubleclick on url
         }
       } else {
@@ -91,21 +92,21 @@ function Login({ logout }: LoginProps) {
   //!building functionality to be able to go to the localstorage and check if there´s a token
   //ANCHOR - TODO - set user with userinformation in Authcontext with
 
-  const getToken = () => {
-    const token = localStorage.getItem("token");
-    return token;
-  };
-  const loginUser = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const success = await login(
-      loginCredentials!.email,
-      loginCredentials!.password
-    );
+  // const getToken = () => {
+  //   const token = localStorage.getItem("token");
+  //   return token;
+  // };
+  // const loginUser = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const success = await login(
+  //     loginCredentials!.email,
+  //     loginCredentials!.password
+  //   );
 
-    if (success) {
-      setLoginSuccess(true);
-    }
-  };
+  //   if (success) {
+  //     setLoginSuccess(true);
+  //   }
+  // };
 
   useEffect(() => {
     const isUserLogged = isUserLoggedIn();
