@@ -56,19 +56,17 @@ function App() {
       <Router>
         <MyNavbar />
         <h1>Muse-X</h1>
-        <Button variant="secondary" onClick={() => console.log("Logout")}>
-          Logout
-        </Button>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/details" element={<DetailsCard />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/profile" element={<Profile />} /> */}
-          <Route
+          <Route path="/profile" element={<Profile />} />
+          {/* <Route
             path="/profile"
             element={<ProtectedRoute element={<Profile />} />}
-          />
+          /> */}
           //TODO - Add more protected routes such as ...whatever?
         </Routes>
       </Router>

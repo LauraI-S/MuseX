@@ -5,6 +5,7 @@ import {
   getUserProfile,
   imageUpload,
   deleteUser,
+  logout,
 } from "../controller/userController.js";
 import jwtAuthorization from "../middlewares/jwtAuthorization.js";
 import multerUpload from "../middlewares/multer.js";
@@ -23,5 +24,6 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.get("/profile", jwtAuthorization, getUserProfile);
 router.delete("/deleteUser", jwtAuthorization, deleteUser);
+router.post("/logout", logout);
 
 export default router;

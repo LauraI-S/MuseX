@@ -158,6 +158,22 @@ const login = async (req, res) => {
     }
   }
 };
+const logout = async (req, res) => {
+  console.log("logout-route working :>> ");
+  const token = req.headers.authorization?.split("")[1];
+  console.log("logout-req :>> ", req);
+  if (!token) {
+    res.status(200).json({ message: "Logout successful" });
+  } else {
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET);
+      res.clearCookie("token");
+    } catch (error) {
+      res.status(200).json({ message: "Logout successful" });
+    }
+  }
+};
+
 const getUserProfile = async (req, res) => {
   console.log("getprofile route working :>> ");
   console.log("req :>> ", req.user);
@@ -240,7 +256,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { imageUpload, signup, login, getUserProfile, deleteUser };
+export { imageUpload, signup, login, getUserProfile, deleteUser, logout };
 
 // const getAllUsers = async (req, res) => {
 //   try {

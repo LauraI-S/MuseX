@@ -1,11 +1,18 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
-type LoginCredentialsType = {
-  // userName: string;
-  email: string;
-  password: string;
-};
+// type LoginCredentialsType = {
+//   // userName: string;
+//   email: string;
+//   password: string;
+// };
 interface LoginProps {
   logout: () => void;
 }
@@ -14,6 +21,8 @@ function Login({ logout }: LoginProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loginCredentials, setLoginCredentials] =
     useState<LoginCredentialsType | null>(null);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const { user, isUserLoggedIn } = useContext(AuthContext);
 
   //my function to toggle the password-visibility
   const togglePasswordVisibility = () => {
@@ -78,18 +87,24 @@ function Login({ logout }: LoginProps) {
     } catch (error) {
       console.log("error :>> ", error);
     }
-    //TODO - set user with userinformation in Authcontext with
   };
   //!building functionality to be able to go to the localstorage and check if there´s a token
+  //ANCHOR - TODO - set user with userinformation in Authcontext with
 
   const getToken = () => {
     const token = localStorage.getItem("token");
     return token;
   };
+  const loginUser = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const success = await login(
+      loginCredentials!.email,
+      loginCredentials!.password
+    );
 
-  const isUserLoggedIn = () => {
-    const token = getToken();
-    return token ? true : false;
+    if (success) {
+      setLoginSuccess(true);
+    }
   };
 
   useEffect(() => {
@@ -145,6 +160,11 @@ function Login({ logout }: LoginProps) {
           Sign up!
         </a>
       </p>
+      {loginSuccess && (
+        <div className="alert alert-success" role="alert">
+          You've been successfully logged in!
+        </div>
+      )}
     </div>
   );
 }

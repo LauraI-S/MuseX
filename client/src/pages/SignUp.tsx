@@ -25,8 +25,8 @@ function SignUp() {
     //!the following line basically combines the new user-information with existing information
     //!...:spread-operator keeps track of the previously stored information
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    console.log("e.target.name :>> ", e.target.name);
-    console.log("e.target.value :>> ", e.target.value);
+    // console.log("e.target.name :>> ", e.target.name);
+    // console.log("e.target.value :>> ", e.target.value);
   };
 
   const togglePasswordVisibility = () => {
@@ -35,47 +35,47 @@ function SignUp() {
 
   //!preventing new page-refresh by default, console-logging my new user
   const signUp = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     signUp(newUser.email, newUser.name, newUser.password);
-    // console.log("newUser :>> ", newUser);
-    // const myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    // myHeaders.append("X-API-Key", "{{token}}");
+    console.log("newUser :>> ", newUser);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("X-API-Key", "{{token}}");
 
-    // const urlencoded = new URLSearchParams();
-    // urlencoded.append("name", newUser.name);
-    // urlencoded.append("email", newUser.email);
-    // urlencoded.append("password", newUser.password);
-    // urlencoded.append(
-    //   "image",
-    //   newUser.userImage
-    //     ? newUser.userImage
-    //     : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
-    // );
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("name", newUser.name);
+    urlencoded.append("email", newUser.email);
+    urlencoded.append("password", newUser.password);
+    urlencoded.append(
+      "image",
+      newUser.userImage
+        ? newUser.userImage
+        : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
+    );
 
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: urlencoded,
-    // };
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+    };
 
-    // fetch("http://localhost:4000/api/users/signup", requestOptions)
-    //   .then((response) => response.text())
-    //   .then((result) => {
-    //     console.log("result", result);
-    //     window.alert("You have successfully registered!");
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //     window.alert("Registration failed. Please try again.");
-    //   });
+    fetch("http://localhost:4000/api/users/signup", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log("result", result);
+        window.alert("You have successfully registered!");
+      })
+      .catch((error) => {
+        console.log("error", error);
+        window.alert("Registration failed. Please try again.");
+      });
   };
   return (
     <div className="container">
       <br />
       <div className="registration-container form-container">
         <h1 className="text-center">SIGN UP</h1>
-        <form onSubmit={signUp}>
+        <form onSubmit={(e) => signUp(e)}>
           <p className="text-center">
             Fill in the information below to sign up:
           </p>
