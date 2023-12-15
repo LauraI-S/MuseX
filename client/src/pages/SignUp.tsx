@@ -11,7 +11,7 @@ export interface User {
 }
 
 function SignUp() {
-  const { user, signUp } = useContext(AuthContext);
+  const { user, signup } = useContext(AuthContext);
   const [newUser, setNewUser] = useState<User>({
     name: "",
     email: "",
@@ -34,41 +34,16 @@ function SignUp() {
   };
 
   //!preventing new page-refresh by default, console-logging my new user
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    signUp(newUser.email, newUser.name, newUser.password);
-    console.log("newUser :>> ", newUser);
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    myHeaders.append("X-API-Key", "{{token}}");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("name", newUser.name);
-    urlencoded.append("email", newUser.email);
-    urlencoded.append("password", newUser.password);
-    urlencoded.append(
-      "image",
-      newUser.image
-        ? newUser.image
-        : "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
-    );
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-    };
-
-    fetch("http://localhost:4000/api/users/signup", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        console.log("result", result);
-        window.alert("You have successfully registered!");
-      })
-      .catch((error) => {
-        console.log("error", error);
-        window.alert("Registration failed. Please try again.");
-      });
+    try {
+      await signup(newUser.email, newUser.name, newUser.password);
+      window.alert("You have successfully registered!");
+      // Any additional logic for successful registration in the UI
+    } catch (error) {
+      console.log("Registration failed. Please try again.", error);
+      window.alert("Registration failed. Please try again.");
+    }
   };
   return (
     <div className="container">

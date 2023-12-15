@@ -44,7 +44,7 @@ function Details() {
                   alt={musician.name}
                   style={{ maxWidth: "100%" }}
                 />
-                <div card-container>
+                <div className="card-container">
                   <h4>Name: {musician.name}</h4>
                   <p>Instrument: {musician.instrument.join(", ")}</p>
                   <p>Summary: {musician.summary}</p>

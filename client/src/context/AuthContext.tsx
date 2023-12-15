@@ -18,7 +18,7 @@ type User = {
 
 interface AuthContextType {
   user: User | null;
-  userName: string;
+  name: string;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   signup: (email: string, name: string, password: string) => void;
   login: () => void;
@@ -250,7 +250,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         setUser(result.user);
         setUserName(result.user.name);
 
-        window.alert("You have successfully registered!");
+        // window.alert("You have successfully registered!");
       } else {
         const result = await response.json();
         console.log("result not ok:>> ", result);
@@ -258,7 +258,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       }
     } catch (error) {
       console.log("error :>> ", error);
-      window.alert("Registration failed. Please try again.");
+      // window.alert("Registration failed. Please try again.");
     }
   };
 
