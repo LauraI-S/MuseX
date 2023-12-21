@@ -14,8 +14,6 @@ const router = express.Router();
 
 const app = express();
 
-// loading .env file
-
 const DBConnection = async () => {
   console.log("process.env.DB :>> ", process.env.MONGO_URI);
 
@@ -41,13 +39,14 @@ const addMiddlewares = () => {
   passportConfig(passport); //imported from passport.js
   // passport.use(JwtStrategy); would be also a way to "call" passport
 };
-//!Routes Configuration
+
+//!routes
 const addRoutes = () => {
   app.use("/api", router);
   app.use("/api/musicians", musicianRoute);
   app.use("/api/users", userRoute);
 };
-
+//!listen for requrests on port...
 const startServer = () => {
   const port = process.env.PORT || 4000;
   app.listen(port, () => {
@@ -63,10 +62,7 @@ const startServer = () => {
   addRoutes();
   startServer();
 })();
-// const port = process.env.PORT || 2060;
-
-// loading .env file
-
+//!middleware
 app.use(express.json());
 app.use(cors());
 app.use(
@@ -74,18 +70,3 @@ app.use(
     extended: true,
   })
 );
-
-// app.use("/api", router);
-// router.get("/test", (req, res) => {
-//   res.json({
-//     message: "this is my test route",
-//   });
-// });
-
-DBConnection();
-
-// app.listen(port, () => {
-//   console.log("Server is running on".rainbow + port + "port".bgGreen);
-//   // console.log("hello :>> ");
-// });
-// console.log("process.env.MONGODB :>> ", process.env.MONGODB);

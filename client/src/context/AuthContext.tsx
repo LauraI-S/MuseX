@@ -92,7 +92,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     if (token) {
       getProfile();
     }
-  }, []);
+  }, []); //-->empty dependencyArray (Abhängigkeitfeld) macht, dass die funktion nicht jedes Mal neu "gerendert" wird, wenn "state" sich verändert dann läuft die funktion nicht nochmal, nur, wenn die seite neu geladen wird
 
   const handleLoginInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const propertyValue = e.target.value;

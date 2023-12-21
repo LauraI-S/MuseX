@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,47 +10,14 @@ import Home from "../src/pages/Home";
 import SignUp from "../src/pages/SignUp";
 import Login from "./pages/Login";
 import DetailsCard from "./pages/DetailsCard";
-import { Button } from "react-bootstrap";
 import MyNavbar from "./components/MyNavbar";
 import Profile from "./pages/Profile";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "./context/AuthContext";
 import AuthContextProvider from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  // //ANCHOR start creating AuthContext!
-  // const [user, setUser] = useState(false);
-
-  // //the two functions below, they probably belong better to another file (utilities, context...etc..)
-  // const getToken = () => {
-  //   const token = localStorage.getItem("token");
-  //   return token;
-  // };
-  // const isUserLoggedIn = () => {
-  //   const token = getToken();
-
-  //   return token ? true : false;
-  // };
-
-  // const handleLogout = () => {
-  //   logout();
-  //   Navigate("/");
-  // };
-  // const logout = () => {
-  //   localStorage.removeItem("token");
-  //   setUser(false);
-  // };
-  // useEffect(() => {
-  //   const isUserLogged = isUserLoggedIn();
-  //   if (isUserLogged) {
-  //     console.log("%c user is logged in", "color:green");
-  //     setUser(true);
-  //   } else {
-  //     console.log("%c user is NOT logged in", "color:red");
-  //     setUser(false);
-  //   }
-  // }, [user]);
-
+  const { user } = useContext(AuthContext);
   return (
     <AuthContextProvider>
       <Router>
@@ -62,7 +29,10 @@ function App() {
           <Route path="/details" element={<DetailsCard />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={<Profile key={user ? user.id : "no-user"} />}
+          />
           {/* <Route
             path="/profile"
             element={<ProtectedRoute element={<Profile />} />}
@@ -75,3 +45,36 @@ function App() {
 }
 
 export default App;
+
+// //ANCHOR start creating AuthContext!
+// const [user, setUser] = useState(false);
+
+// //the two functions below, they probably belong better to another file (utilities, context...etc..)
+// const getToken = () => {
+//   const token = localStorage.getItem("token");
+//   return token;
+// };
+// const isUserLoggedIn = () => {
+//   const token = getToken();
+
+//   return token ? true : false;
+// };
+
+// const handleLogout = () => {
+//   logout();
+//   Navigate("/");
+// };
+// const logout = () => {
+//   localStorage.removeItem("token");
+//   setUser(false);
+// };
+// useEffect(() => {
+//   const isUserLogged = isUserLoggedIn();
+//   if (isUserLogged) {
+//     console.log("%c user is logged in", "color:green");
+//     setUser(true);
+//   } else {
+//     console.log("%c user is NOT logged in", "color:red");
+//     setUser(false);
+//   }
+// }, [user]);
