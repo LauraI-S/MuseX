@@ -1,72 +1,63 @@
 import express from "express";
 import cors from "cors";
-import colors from "colors";
 import mongoose from "mongoose";
+import passport from "passport";
+import * as dotenv from "dotenv";
+import colors from "colors";
+
+// Import route handlers
 import musicianRoute from "../server/routes/musicianRoute.js";
 import userRoute from "../server/routes/userRoute.js";
-import * as dotenv from "dotenv";
-import passport from "passport";
+import requestRoute from "../server/routes/requestRoute.js";
+
+// Import configurations
 import passportConfig from "./config/passport.js";
 import cloudinaryConfig from "./config/cloudinary.js";
 
 dotenv.config();
-const router = express.Router();
 
 const app = express();
 
-const DBConnection = async () => {
-  console.log("process.env.DB :>> ", process.env.MONGO_URI);
-
+// Database connection
+const connectToDatabase = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("connection to MONGO_URI established".bgGreen);
+    console.log("Connection to the database established".bgGreen);
   } catch (error) {
-    console.log("error connection to MONGO_URI:>> ".red, error);
+    console.error("Error connecting to MONGO_URI:".red, error);
   }
 };
-DBConnection();
 
-//!Midddleware Configuration
-const addMiddlewares = () => {
+// Middleware Configuration
+const configureMiddlewares = () => {
   app.use(express.json());
   app.use(cors());
-  app.use(
-    express.urlencoded({
-      extended: true,
-    })
-  );
+  app.use(express.urlencoded({ extended: true }));
   cloudinaryConfig();
-  passportConfig(passport); //imported from passport.js
-  // passport.use(JwtStrategy); would be also a way to "call" passport
+  passportConfig(passport); // Imported from passport.js
 };
 
-//!routes
-const addRoutes = () => {
+// Route Configuration
+const configureRoutes = () => {
+  const router = express.Router();
   app.use("/api", router);
   app.use("/api/musicians", musicianRoute);
   app.use("/api/users", userRoute);
+  app.use("/api/requests", requestRoute);
 };
-//!listen for requrests on port...
+
+// Server startup
 const startServer = () => {
   const port = process.env.PORT || 4000;
   app.listen(port, () => {
-    console.log("Server is running on ".rainbow + port + " port".rainbow);
-    // console.log("hello :>> ");
+    console.log(`Server is running on port ${port}`.rainbow);
   });
 };
 
-//!IIFE  (Immediately Invoked Function Expression)
-(async function controller() {
-  await DBConnection();
-  addMiddlewares();
-  addRoutes();
+// IIFE (Immediately Invoked Function Expression)
+(async function initializeServer() {
+  await connectToDatabase();
+  configureMiddlewares();
+  configureRoutes();
   startServer();
 })();
-//!middleware
-app.use(express.json());
-app.use(cors());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
