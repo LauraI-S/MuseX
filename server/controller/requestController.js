@@ -29,11 +29,16 @@ const getRequest = async (req, res) => {
 //create new request
 
 const createRequest = async (req, res) => {
-  const { location, genre, availability } = req.body;
+  const { musicianname, location, genre, availability } = req.body;
 
   //add doc to db
   try {
-    const request = await Request.create({ location, genre, availability });
+    const request = await Request.create({
+      musicianname,
+      location,
+      genre,
+      availability,
+    });
     res.status(200).json(request);
     // Query and log all requests after creating a new one
     const requests = await Request.find({});
@@ -68,6 +73,7 @@ const updateRequest = async (req, res) => {
   const request = await Request.findOneAndUpdate(
     { _id: id },
     {
+      musicianname: req.body.musicianname,
       location: req.body.location,
       genre: req.body.genre,
       availability: req.body.availability,

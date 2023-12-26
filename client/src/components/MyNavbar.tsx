@@ -79,6 +79,13 @@ const MyNavbar = () => {
                 >
                   Profile
                 </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/postrequirements"
+                  onClick={() => setExpanded(false)}
+                >
+                  Post
+                </Nav.Link>
               </>
             )}
           </Nav>

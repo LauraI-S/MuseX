@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import { Button } from "react-bootstrap";
-import "../styles/SignUp.css"; // Import a CSS file for custom styling
+import "../styles/SignUp.css";
 import { AuthContext } from "../context/AuthContext";
 
 export interface User {

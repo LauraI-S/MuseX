@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const requestSchema = new Schema(
   {
+    musicianname: {
+      type: String,
+      required: true,
+    },
     location: {
       type: String,
       required: true,
