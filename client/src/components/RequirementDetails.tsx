@@ -1,7 +1,7 @@
 const RequirementDetails = ({ request }) => {
   return (
     <div className="request-details">
-      <h4>{request.musicianname}</h4>
+      <h4>Occasion: {request.occasion}</h4>
       <p>
         <strong> Location (city): </strong>
         {request.location}

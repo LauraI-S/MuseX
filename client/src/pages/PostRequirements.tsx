@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/index.css";
 import RequirementDetails from "../components/RequirementDetails";
+import RequirementForm from "../components/RequirementForm";
 
 type Props = {};
 
@@ -27,6 +28,7 @@ const PostRequirements = () => {
             <RequirementDetails key={request._id} request={request} />
           ))}
       </div>
+      <RequirementForm />
     </div>
   );
 };

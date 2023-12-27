@@ -29,12 +29,12 @@ const getRequest = async (req, res) => {
 //create new request
 
 const createRequest = async (req, res) => {
-  const { musicianname, location, genre, availability } = req.body;
+  const { occasion, location, genre, availability } = req.body;
 
   //add doc to db
   try {
     const request = await Request.create({
-      musicianname,
+      occasion,
       location,
       genre,
       availability,
@@ -73,7 +73,7 @@ const updateRequest = async (req, res) => {
   const request = await Request.findOneAndUpdate(
     { _id: id },
     {
-      musicianname: req.body.musicianname,
+      occasion: req.body.occasion,
       location: req.body.location,
       genre: req.body.genre,
       availability: req.body.availability,
