@@ -3,14 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthContextProvider } from "./context/AuthContext.js";
-import { RequestContextProvider } from "./context/RequestContext.tsx";
+import { RequestsContextProvider } from "./context/RequestContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthContextProvider>
-      <RequestContextProvider>
+      <RequestsContextProvider>
         <App />
-      </RequestContextProvider>
+      </RequestsContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );
