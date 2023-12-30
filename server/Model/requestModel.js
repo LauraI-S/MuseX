@@ -8,7 +8,7 @@ const requestSchema = new Schema(
       required: true,
     },
     location: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     genre: {
@@ -16,7 +16,7 @@ const requestSchema = new Schema(
       required: true,
     },
     availability: {
-      type: Boolean,
+      type: String,
       required: true,
     },
   },

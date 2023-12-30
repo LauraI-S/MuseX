@@ -81,7 +81,7 @@ const MyNavbar = () => {
                 </Nav.Link>
                 <Nav.Link
                   as={NavLink}
-                  to="/postrequirements"
+                  to="/post"
                   onClick={() => setExpanded(false)}
                 >
                   Post

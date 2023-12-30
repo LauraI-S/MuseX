@@ -54,3 +54,62 @@ body {
   border-radius: 50%;
   color: #333;
 }
+label,
+input {
+  display: block;
+}
+
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input[type="checkbox"] {
+  display: none;
+  /* Hide the default checkbox */}
+
+.postrequirements input[type="checkbox"]+label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.postrequirements input[type="checkbox"]+label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.postrequirements input[type="checkbox"]:checked+label:before {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}

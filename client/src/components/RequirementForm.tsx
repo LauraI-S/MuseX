@@ -2,9 +2,9 @@ import { useState } from "react";
 
 const RequirementForm = () => {
   const [occasion, setOccasion] = useState("");
-  const [location, setLocation] = useState(false);
+  const [location, setLocation] = useState("");
   const [genre, setGenre] = useState("");
-  const [availability, setAvailability] = useState(false);
+  const [availability, setAvailability] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -25,9 +25,9 @@ const RequirementForm = () => {
     if (response.ok) {
       setError(null);
       setOccasion("");
-      setLocation(false);
+      setLocation("");
       setGenre("");
-      setAvailability(false);
+      setAvailability("mostly");
       console.log("new request added", json);
     }
   };
@@ -43,34 +43,45 @@ const RequirementForm = () => {
           onChange={(e) => setOccasion(e.target.value)}
           value={occasion}
         />
-        <label>
+        {/* <label>
           Location:
           <input
             type="checkbox"
             onChange={() => setLocation(!location)}
             checked={location}
           />
-        </label>
-        {/* <label>Location:</label>
+        </label> */}
+        <label>Location:</label>
         <input
           type="text"
           onChange={(e) => setLocation(e.target.value)}
           value={location}
-        /> */}
+        />
         <label>Genre:</label>
         <input
           type="text"
           onChange={(e) => setGenre(e.target.value)}
           value={genre}
         />
-        <label>
+        <label>Availability:</label>
+        <select
+          value={availability}
+          onChange={(e) => setAvailability(e.target.value)}
+        >
+          <option value="">Select Availability</option>
+          <option value="mostly">Mostly</option>
+          <option value="onlyNight">Only in the night</option>
+          <option value="onlyWeekdays">Only on weekdays</option>
+          <option value="contactMe">Contact me</option>
+        </select>
+        {/* <label>
           Availability:
           <input
             type="checkbox"
             onChange={() => setAvailability(!availability)}
             checked={availability}
           />
-        </label>
+        </label> */}
         <button>Add Request</button>
         {error && <div className="error">{error}</div>}
       </form>

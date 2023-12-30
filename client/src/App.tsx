@@ -27,10 +27,9 @@ function App() {
         <Router>
           <MyNavbar />
           <h1>Muse-X find YOUR Musician</h1>
-
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/postrequirements" element={<PostRequirements />} />
+            <Route path="/post" element={<PostRequirements />} />
             <Route path="/details" element={<DetailsCard />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
