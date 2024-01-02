@@ -5,7 +5,7 @@ export const RequestsContext = createContext();
 export const requestsReducer = (state, action) => {
   //action: object that we pass into the dispatch-function
   switch (action.type) {
-    case "SET_REQUEST":
+    case "SET_REQUESTS":
       return {
         requests: action.payload,
       };

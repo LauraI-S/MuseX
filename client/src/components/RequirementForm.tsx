@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useRequestsContext } from "../hooks/useRequests";
 
 const RequirementForm = () => {
+  const { dispatch } = useRequestsContext();
+
   const [occasion, setOccasion] = useState("");
   const [location, setLocation] = useState("");
   const [genre, setGenre] = useState("");
@@ -29,6 +32,7 @@ const RequirementForm = () => {
       setGenre("");
       setAvailability("mostly");
       console.log("new request added", json);
+      dispatch({ type: "CREATE_REQUEST", payload: json });
     }
   };
 

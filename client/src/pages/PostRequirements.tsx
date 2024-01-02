@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useRequestsContext } from "../hooks/useRequests";
+
 import "../styles/index.css";
 import RequirementDetails from "../components/RequirementDetails";
 import RequirementForm from "../components/RequirementForm";
@@ -6,7 +8,8 @@ import RequirementForm from "../components/RequirementForm";
 type Props = {};
 
 const PostRequirements = () => {
-  const [requests, setRequests] = useState(null);
+  // const [requests, setRequests] = useState(null);
+  const { requests, dispatch } = useRequestsContext();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -14,11 +17,12 @@ const PostRequirements = () => {
       const json = await response.json();
 
       if (response.ok) {
-        setRequests(json);
+        // setRequests(json);
+        dispatch({ type: "SET_REQUESTS", payload: json });
       }
     };
     fetchRequests();
-  }, []); //-->dependency array makes sure the data is only fetched when the page first renders
+  }, [dispatch]); //-->dependency array makes sure the data is only fetched when the page first renders
 
   return (
     <div className="postrequirements">
