@@ -31,6 +31,25 @@ const getRequest = async (req, res) => {
 const createRequest = async (req, res) => {
   const { occasion, location, genre, availability } = req.body;
 
+  let emptyFields = [];
+
+  if (!occasion) {
+    emptyFields.push("occasion");
+  }
+  if (!location) {
+    emptyFields.push("location");
+  }
+  if (!genre) {
+    emptyFields.push("genre");
+  }
+  if (!availability) {
+    emptyFields.push("availability");
+  }
+  if (emptyFields.length > 0)
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields first", emptyFields });
+
   //add doc to db
   try {
     const request = await Request.create({

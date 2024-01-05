@@ -9,6 +9,7 @@ const RequirementForm = () => {
   const [genre, setGenre] = useState("");
   const [availability, setAvailability] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,12 +26,14 @@ const RequirementForm = () => {
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
       setError(null);
       setOccasion("");
       setLocation("");
       setGenre("");
+      setEmptyFields([]);
       setAvailability("mostly");
       console.log("new request added", json);
       dispatch({ type: "CREATE_REQUEST", payload: json });
@@ -39,43 +42,6 @@ const RequirementForm = () => {
 
   return (
     <>
-      {/* <form className="postrequirements" onSubmit={handleSubmit}>
-        
-        <h3>Add a new Request</h3>
-
-        <label>Occasion:</label>
-        <input
-          type="text"
-          onChange={(e) => setOccasion(e.target.value)}
-          value={occasion}
-        />
-        <label>Location:</label>
-        <input
-          type="text"
-          onChange={(e) => setLocation(e.target.value)}
-          value={location}
-        />
-        <label>Genre:</label>
-        <input
-          type="text"
-          onChange={(e) => setGenre(e.target.value)}
-          value={genre}
-        />
-        <label>Availability:</label>
-        <select
-          value={availability}
-          onChange={(e) => setAvailability(e.target.value)}
-        >
-          <option value="">Select Availability</option>
-          <option value="mostly">Mostly</option>
-          <option value="onlyNight">Only in the night</option>
-          <option value="onlyWeekdays">Only on weekdays</option>
-          <option value="contactMe">Contact me</option>
-        </select>
-        
-        <button>Add Request</button>
-        {error && <div className="error">{error}</div>}
-      </form> */}
       <form className="postrequirements" onSubmit={handleSubmit}>
         <h3>Add a new Request</h3>
 
@@ -85,6 +51,7 @@ const RequirementForm = () => {
           type="text"
           onChange={(e) => setOccasion(e.target.value)}
           value={occasion}
+          className={emptyFields.includes("occasion") ? "error" : ""}
         />
 
         <label htmlFor="location">Location:</label>
@@ -93,6 +60,7 @@ const RequirementForm = () => {
           type="text"
           onChange={(e) => setLocation(e.target.value)}
           value={location}
+          className={emptyFields.includes("location") ? "error" : ""}
         />
 
         <label htmlFor="genre">Genre:</label>
@@ -101,6 +69,7 @@ const RequirementForm = () => {
           type="text"
           onChange={(e) => setGenre(e.target.value)}
           value={genre}
+          className={emptyFields.includes("genre") ? "error" : ""}
         />
 
         <label htmlFor="availability">Availability:</label>
@@ -108,6 +77,7 @@ const RequirementForm = () => {
           id="availability"
           value={availability}
           onChange={(e) => setAvailability(e.target.value)}
+          className={emptyFields.includes("availability") ? "error" : ""}
         >
           <option value="">Select Availability</option>
           <option value="mostly">Mostly</option>

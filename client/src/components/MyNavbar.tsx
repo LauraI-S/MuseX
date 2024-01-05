@@ -134,6 +134,11 @@ const MyNavbar = () => {
               Details
             </Link>
           </li>
+          <li>
+            <Link to="/post" onClick={() => setIsNavExpanded(false)}>
+              Post
+            </Link>
+          </li>
           {/* Add more nav items here */}
         </ul>
 

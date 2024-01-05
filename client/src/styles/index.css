@@ -14,14 +14,10 @@ body {
 
 .postrequirements {
   display: grid;
-grid-template-columns: repeat(2, 1fr);
-  /* Two equal columns */
-  gap: 20px;
-  /* Adjust the gap as needed */
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
   max-width: 600px;
-  /* Adjust the max-width as needed */
   margin: auto;
-  /* Center the form */
 }
 
 
@@ -108,5 +104,7 @@ select {
   box-sizing: border-box;
   background-color: white;
 }
-
+input.error {
+  border: 1px solid var(--error);
+}
 
