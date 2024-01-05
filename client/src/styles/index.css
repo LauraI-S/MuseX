@@ -14,10 +14,16 @@ body {
 
 .postrequirements {
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 100px;
- 
+grid-template-columns: repeat(2, 1fr);
+  /* Two equal columns */
+  gap: 20px;
+  /* Adjust the gap as needed */
+  max-width: 600px;
+  /* Adjust the max-width as needed */
+  margin: auto;
+  /* Center the form */
 }
+
 
 .request-details {
   background: #fff;

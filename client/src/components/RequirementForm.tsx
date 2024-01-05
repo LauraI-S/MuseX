@@ -14,6 +14,7 @@ const RequirementForm = () => {
     e.preventDefault();
 
     const request = { occasion, location, genre, availability };
+
     const response = await fetch("http://localhost:4000/api/requests", {
       method: "POST",
       body: JSON.stringify(request),
@@ -38,8 +39,8 @@ const RequirementForm = () => {
 
   return (
     <>
-      <form className="postrequirements" onSubmit={handleSubmit}>
-        {/* <form className="requirement-form" onSubmit={handleSubmit}> */}
+      {/* <form className="postrequirements" onSubmit={handleSubmit}>
+        
         <h3>Add a new Request</h3>
 
         <label>Occasion:</label>
@@ -48,14 +49,6 @@ const RequirementForm = () => {
           onChange={(e) => setOccasion(e.target.value)}
           value={occasion}
         />
-        {/* <label>
-          Location:
-          <input
-            type="checkbox"
-            onChange={() => setLocation(!location)}
-            checked={location}
-          />
-        </label> */}
         <label>Location:</label>
         <input
           type="text"
@@ -79,14 +72,50 @@ const RequirementForm = () => {
           <option value="onlyWeekdays">Only on weekdays</option>
           <option value="contactMe">Contact me</option>
         </select>
-        {/* <label>
-          Availability:
-          <input
-            type="checkbox"
-            onChange={() => setAvailability(!availability)}
-            checked={availability}
-          />
-        </label> */}
+        
+        <button>Add Request</button>
+        {error && <div className="error">{error}</div>}
+      </form> */}
+      <form className="postrequirements" onSubmit={handleSubmit}>
+        <h3>Add a new Request</h3>
+
+        <label htmlFor="occasion">Occasion:</label>
+        <input
+          id="occasion"
+          type="text"
+          onChange={(e) => setOccasion(e.target.value)}
+          value={occasion}
+        />
+
+        <label htmlFor="location">Location:</label>
+        <input
+          id="location"
+          type="text"
+          onChange={(e) => setLocation(e.target.value)}
+          value={location}
+        />
+
+        <label htmlFor="genre">Genre:</label>
+        <input
+          id="genre"
+          type="text"
+          onChange={(e) => setGenre(e.target.value)}
+          value={genre}
+        />
+
+        <label htmlFor="availability">Availability:</label>
+        <select
+          id="availability"
+          value={availability}
+          onChange={(e) => setAvailability(e.target.value)}
+        >
+          <option value="">Select Availability</option>
+          <option value="mostly">Mostly</option>
+          <option value="onlyNight">Only in the night</option>
+          <option value="onlyWeekdays">Only on weekdays</option>
+          <option value="contactMe">Contact me</option>
+        </select>
+
         <button>Add Request</button>
         {error && <div className="error">{error}</div>}
       </form>

@@ -13,6 +13,10 @@ export const requestsReducer = (state, action) => {
       return {
         requests: [action.payload, ...state.requests], //...we create a new array of requests and that will be one SINGLE new request to which we add to the array, (...(spread-operator)) //!this keeps the database insinc with the local state, no interaction with database!
       };
+    case "DELETE_REQUEST":
+      return {
+        requests: state.requests.filter((r) => r._id !== action.payload._id),
+      };
     default:
       return state;
   }
@@ -23,6 +27,7 @@ export const RequestsContextProvider = ({ children }) => {
     requests: null, //initial value of my state
   });
   // dispatch({type:'CREATE_REQUEST',payload:}) //-->property that describes the state-change we wanna make //!payload represents any data we need to make change (an array of requests-object of arrays)
+
   return (
     <RequestsContext.Provider value={{ ...state, dispatch }}>
       {" "}
