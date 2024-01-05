@@ -23,63 +23,25 @@ function App() {
 
   return (
     <div className="App">
-      <AuthContextProvider>
-        <Router>
-          <MyNavbar />
-          <h1>Muse-X find YOUR Musician</h1>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/post" element={<PostRequirements />} />
-            <Route path="/details" element={<DetailsCard />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/profile"
-              element={<Profile key={user ? user.id : "no-user"} />}
-            />
-            {/* <Route
-            path="/profile"
-            element={<ProtectedRoute element={<Profile />} />}
-          /> */}
-            //TODO - Add more protected routes such as ...whatever?
-          </Routes>
-        </Router>
-      </AuthContextProvider>
+      {/* No need to wrap with AuthContextProvider here */}
+      {/* <Router> */}
+      <MyNavbar />
+      <h1>Muse-X find YOUR Musician</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/post" element={<PostRequirements />} />
+        <Route path="/details" element={<DetailsCard />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/profile"
+          element={<Profile key={user ? user.id : "no-user"} />}
+        />
+        {/* More routes can be added here */}
+      </Routes>
+      {/* </Router> */}
     </div>
   );
 }
 
 export default App;
-
-// //ANCHOR start creating AuthContext!
-// const [user, setUser] = useState(false);
-
-// //the two functions below, they probably belong better to another file (utilities, context...etc..)
-// const getToken = () => {
-//   const token = localStorage.getItem("token");
-//   return token;
-// };
-// const isUserLoggedIn = () => {
-//   const token = getToken();
-
-//   return token ? true : false;
-// };
-
-// const handleLogout = () => {
-//   logout();
-//   Navigate("/");
-// };
-// const logout = () => {
-//   localStorage.removeItem("token");
-//   setUser(false);
-// };
-// useEffect(() => {
-//   const isUserLogged = isUserLoggedIn();
-//   if (isUserLogged) {
-//     console.log("%c user is logged in", "color:green");
-//     setUser(true);
-//   } else {
-//     console.log("%c user is NOT logged in", "color:red");
-//     setUser(false);
-//   }
-// }, [user]);

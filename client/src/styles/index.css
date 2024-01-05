@@ -1,26 +1,22 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
 :root {
   --primary: #1aac83;
   --error: #e7195a;
 }
+
 body {
   background: #f1f1f1;
   margin: 0;
   font-family: "Poppins";
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
+
 
 .postrequirements {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 100px;
-  justify-content: center;
-  align-items: center;
+ 
 }
 
 .request-details {
@@ -54,6 +50,15 @@ body {
   border-radius: 50%;
   color: #333;
 }
+@media (max-width: 768px) {
+  .postrequirements {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "form"
+      "details";
+  }
+}
+
 label,
 input {
   display: block;
@@ -87,29 +92,15 @@ div.error {
   border-radius: 4px;
   margin: 20px 0;
 }
-input[type="checkbox"] {
-  display: none;
-  /* Hide the default checkbox */}
-
-.postrequirements input[type="checkbox"]+label {
-  position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-}
-
-.postrequirements input[type="checkbox"]+label:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ddd;
-  background-color: #fff;
+select {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  box-sizing: border-box;
+  background-color: white;
 }
 
-.postrequirements input[type="checkbox"]:checked+label:before {
-  background-color: var(--primary);
-  border-color: var(--primary);
-}
+
