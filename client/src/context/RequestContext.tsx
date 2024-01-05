@@ -26,7 +26,7 @@ export const RequestsContextProvider = ({ children }) => {
   return (
     <RequestsContext.Provider value={{ ...state, dispatch }}>
       {" "}
-      {/*creating a dynamic state value for the A.C-Provider*/}
+      {/*creating a dynamic state value for the R.C-Provider*/}
       {children}
     </RequestsContext.Provider>
   );
