@@ -58,6 +58,6 @@ router.get("/profile", jwtAuthorization, getUserProfile);
 //   res.json({ mssg: "UPDATE a request for musicians" });
 // });
 
-// router.delete("/deleteUser", jwtAuthorization, deleteUser);
+router.delete("/deleteUser", jwtAuthorization, deleteUser);
 
 export default router;

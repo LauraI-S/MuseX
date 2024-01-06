@@ -111,7 +111,7 @@ const MyNavbar = () => {
   return (
     <nav className="navbar">
       <Link to="/" className="nav-logo">
-        <img src={logo} alt="Logo" height="30" />
+        <img src={logo} alt="Logo" height="200" />
       </Link>
 
       <button
@@ -150,12 +150,18 @@ const MyNavbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" onClick={() => setIsNavExpanded(false)}>
-                Login
-              </Link>
-              <Link to="/signup" onClick={() => setIsNavExpanded(false)}>
-                Signup
-              </Link>
+              <ul>
+                <li>
+                  <Link to="/login" onClick={() => setIsNavExpanded(false)}>
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/signup" onClick={() => setIsNavExpanded(false)}>
+                    Signup
+                  </Link>
+                </li>
+              </ul>
             </>
           )}
         </div>

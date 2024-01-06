@@ -3,10 +3,10 @@ import userModel from "../Model/userModel.js";
 import { issueToken } from "../utils/jwt.js";
 import { encryptPassword, verifyPassword } from "../utils/passwordServices.js";
 import { v2 as cloudinary } from "cloudinary";
+import validator from "validator";
+import react from "react";
 
 const imageUpload = async (req, res) => {
-  // console.log("route working :>> ");
-  // console.log("req :>> ", req);
   console.log("req.file :>> ", req.file);
   if (req.file) {
     try {
@@ -40,32 +40,43 @@ const signup = async (req, res) => {
   if (!req.body) {
     return res.status(400).json({ error: "No data provided" });
   }
+  if (!req.body.name) {
+    return res.status(400).json({ error: "Name is required" });
+  }
   //REVIEW if req.body.email doenst exist write you forgot to put an email
   if (req.body.email === null || undefined) {
     return res.status(400).json({ error: "Email is required" });
+  }
+  if (!req.body.password) {
+    return res.status(400).json({ error: "Password is required" });
   }
   //if the req.body.email exists (an email is being sent from the client), then we check IF the email exists already in the database
   const existingUser = await userModel.findOne({ email: req.body.email });
   console.log("existingUser function finished :>> ");
   if (existingUser) {
-    res.status(200).json({
+    return res.status(409).json({
       message: "email already exists",
       //FIXME - show that alert in frontend
     });
   }
-
-  //FIXME - ANCHOR!valid email-format?
-  const isValidEmail = (email) => {
-    // Regular expression for a simple email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Test the email against the regular expression
-    return emailRegex.test(email);
-  };
-  if (!isValidEmail(req.body.email)) {
-    return res.status(400).json({ error: "Invalid email format." });
+  //validation
+  if (!req.body.name || !req.body.email || !req.body.password) {
+    return res.status(400).json({ error: "All fields must be filled" });
   }
-  console.log("valid email-function completed :>> ");
+  if (!validator.isEmail(req.body.email)) {
+    return res.status(400).json({ error: "Email is not valid" });
+  }
+  if (!validator.isStrongPassword(req.body.password)) {
+    return res.status(400).json({ error: "Password not strong enough" });
+  }
+  validator.isStrongPassword(req.body.password, {
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 0,
+    minNumbers: 1,
+    minSymbols: 0,
+  });
+
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {
     //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash password, 2nd save user, 3rd reponse to the client
@@ -79,12 +90,12 @@ const signup = async (req, res) => {
         image: req.body.image,
         password: hashedPassword,
       });
-      console.log("new user object created :>> ");
+      console.log("new user created :>> ");
+
       const savedUser = await newUser.save();
       console.log("new user saved :>> ");
-      console.log("savedUser :>> ", savedUser);
       res.status(201).json({
-        message: "user registered",
+        message: "user registered!",
         user: {
           _id: savedUser._id,
           name: savedUser.name,
@@ -94,7 +105,7 @@ const signup = async (req, res) => {
       });
     } else {
       res.status(500).json({
-        message: "something went wrong",
+        message: "Error encrypting password",
       });
     }
   }
@@ -195,41 +206,10 @@ const getUserProfile = async (req, res) => {
     });
   }
 };
-// const deleteUser = async (req, res) => {
-//   try {
-//     console.log("delete route works :>> ", req.params.userId);
 
-//     const userIdToDelete = req.params.userId;
-//     console.log("Deleting user with ID:", userIdToDelete);
-
-//     const deletedUser = await userModel.findOneAndDelete({
-//       userId: userIdToDelete,
-//     });
-
-//     console.log("Deleted user:", deletedUser);
-
-//     if (!deletedUser) {
-//       return res.status(404).json({
-//         message: "User not found. Are you sure you want to delete this user?",
-//       });
-//     }
-
-//     res.status(200).json({
-//       message: "User deleted successfully",
-//       deletedUser,
-//     });
-//   } catch (error) {
-//     console.error("Error deleting user:", error);
-//     res.status(500).json({
-//       message: "Internal server error",
-//     });
-//   }
-// };
 const deleteUser = async (req, res) => {
   console.log("req.user :>> ", req.user);
   try {
-    // console.log("deleting - route works :>> ", req.params._id);
-    // const userIdToDelete = req.params.userId;
     const user = req.user;
     const deletedUser = await userModel.findOneAndDelete({
       _id: user._id,
@@ -282,3 +262,34 @@ export { imageUpload, signup, login, getUserProfile, deleteUser, logout };
 // if (number !== 1) {
 //   console.log("hello");
 // }
+
+// const deleteUser = async (req, res) => {
+//   try {
+//     console.log("delete route works :>> ", req.params.userId);
+
+//     const userIdToDelete = req.params.userId;
+//     console.log("Deleting user with ID:", userIdToDelete);
+
+//     const deletedUser = await userModel.findOneAndDelete({
+//       userId: userIdToDelete,
+//     });
+
+//     console.log("Deleted user:", deletedUser);
+
+//     if (!deletedUser) {
+//       return res.status(404).json({
+//         message: "User not found. Are you sure you want to delete this user?",
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "User deleted successfully",
+//       deletedUser,
+//     });
+//   } catch (error) {
+//     console.error("Error deleting user:", error);
+//     res.status(500).json({
+//       message: "Internal server error",
+//     });
+//   }
+// };

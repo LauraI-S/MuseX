@@ -18,16 +18,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  favoriteMusicians: [
-    {
-      musician: {
-        type: String,
-        required: false,
-      },
-      // comments: [{ text: String, date: { type: Date, default: Date.now } }],
-      likes: { type: Number, default: 0 },
-    },
-  ],
 });
 const userModel = mongoose.model("user", userSchema);
 

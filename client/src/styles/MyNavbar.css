@@ -8,7 +8,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #d47479;
+    background-color: #d4745d;
     padding: 0 15px;
     position: fixed;
     top: 0;
@@ -16,9 +16,7 @@ body {
         z-index: 1000;
 }
 
-.nav-logo img {
-    height: 30px;
-}
+
 
 /* Hamburger menu styles */
 .nav-toggle {
@@ -62,7 +60,7 @@ body {
 }
 
 .nav-menu.expanded {
-    display: block;
+    display: flex;
 }
 
 .nav-menu ul {

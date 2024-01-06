@@ -42,7 +42,7 @@ const RequirementForm = () => {
 
   return (
     <>
-      <form className="postrequirements" onSubmit={handleSubmit}>
+      <form className="create" onSubmit={handleSubmit}>
         <h3>Add a new Request</h3>
 
         <label htmlFor="occasion">Occasion:</label>
