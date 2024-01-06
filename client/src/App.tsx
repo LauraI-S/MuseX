@@ -16,14 +16,13 @@ import Profile from "./pages/Profile";
 import PostRequirements from "./pages/PostRequirements";
 import { AuthContext } from "./context/AuthContext";
 import AuthContextProvider from "./context/AuthContext";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { user } = useContext(AuthContext);
 
   return (
     <div className="App">
-      {/* No need to wrap with AuthContextProvider here */}
       {/* <Router> */}
       <MyNavbar />
       <h1>Muse-X find YOUR Musician</h1>
@@ -37,7 +36,6 @@ function App() {
           path="/profile"
           element={<Profile key={user ? user.id : "no-user"} />}
         />
-        {/* More routes can be added here */}
       </Routes>
       {/* </Router> */}
     </div>

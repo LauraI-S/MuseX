@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { getToken } from "../utils/token";
 import "../styles/Profile.css";
 
@@ -65,8 +65,44 @@ const Profile: React.FC = () => {
     }
   };
 
+  const deleteUser = async () => {
+    const token = getToken();
+    if (!token) {
+      alert("Please log in to delete your account.");
+      return;
+    }
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/users/deleteUser",
+        requestOptions
+      );
+
+      if (response.ok) {
+        // Handle successful deletion, e.g., redirect to login page
+        alert("Account deleted successfully.");
+      } else {
+        console.log("Error deleting user:", response.statusText);
+      }
+    } catch (error) {
+      console.log("Error deleting user:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch user profile when the component mounts
+    getProfile();
+  }, []);
+
   const getProfile = async () => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       alert("You need to log in first");
       return;
@@ -96,72 +132,63 @@ const Profile: React.FC = () => {
       console.log("Error fetching user profile:", error);
     }
   };
-
-  const deleteUser = () => {
-    const token = getToken();
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
-    const requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-    };
-
-    fetch("http://localhost:4000/api/users/deleteUser", requestOptions)
-      .then((response) => response.text())
-      .catch((error) => console.log("Error deleting user:", error));
-  };
-
-  useEffect(() => {
-    console.log("Profile component is mounting");
-    // Other logic...
-
-    return () => {
-      console.log("Profile component is unmounting");
-    };
-  }, []);
-
   return (
-    <div className="profile-container">
-      <h3>User Profile</h3>
+    <Card className="profile-container">
+      <Card.Header>
+        <h3>User Profile</h3>
+      </Card.Header>
+      <Card.Body>
+        <div className="image-container">
+          {/* Profile image */}
+          {user && (
+            <div className="profile-image">
+              <img src={user.image} alt="user image" />
+            </div>
+          )}
 
-      <div className="input-container">
-        <form onSubmit={uploadImage}>
-          <label htmlFor="image" className="custom-upload-button">
-            Upload Picture
-            <input
-              type="file"
-              id="image"
-              accept="image/*"
-              onChange={handleInputChange}
-            />
-          </label>
-          <Button variant="secondary" type="submit">
-            Upload
-          </Button>
-        </form>
-        {newUser && <img src={newUser.image} alt="user image" />}
+          {/* Upload form */}
+          <div className="input-container">
+            <form onSubmit={uploadImage}>
+              <label htmlFor="image" className="custom-upload-button">
+                Upload Picture
+                <input
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                />
+              </label>
+              <Button variant="secondary" type="submit">
+                Upload
+              </Button>
+            </form>
+            {selectedFile && (
+              <img
+                src={URL.createObjectURL(selectedFile)}
+                alt="user image"
+                className="selected-image"
+              />
+            )}
+          </div>
 
-        {selectedFile && (
-          <img src={URL.createObjectURL(selectedFile)} alt="user image" />
-        )}
-      </div>
-
-      {user && ( // Check if user is defined
-        <div className="user-info">
-          <h4>User Information</h4>
-          <p>
-            <strong>User ID:</strong> {user.id}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          <p>
-            <strong>Username:</strong> {user.name}
-          </p>
+          {/* User Information */}
+          {user && (
+            <div className="user-info">
+              <h4>User Information</h4>
+              <p>
+                <strong>User ID:</strong> {user.id}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+              <p>
+                <strong>Username:</strong> {user.name}
+              </p>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </Card.Body>
+    </Card>
   );
 };
 

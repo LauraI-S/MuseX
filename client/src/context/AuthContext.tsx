@@ -97,8 +97,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const handleLoginInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const propertyValue = e.target.value;
     const propertyName = e.target.name;
-    // console.log('propertyName,propertyValue :>> ', propertyName, propertyValue);
-
     //->State (Zustand) used by the handleLoginInputChange-function saves data that might change! the "!" makes sure that it is not set to "null"-which is unwahrscheinlich beacause it is already in a setter-form which means something is happening to it,right?
     //... spread-operator, ("!") non- null-assertion (TS)
     setLoginCredentials({
@@ -153,29 +151,16 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     return token;
   };
 
-  // const logout = () => {
-  //   localStorage.removeItem("token");
-  //   setUser(false);
-  // };
   useEffect(() => {
     const isUserLogged = isUserLoggedIn();
     if (isUserLogged) {
       console.log("%c user is logged in", "color:green");
-      setUser(true);
+      getProfile(); //fetching user profile if user is logged in
     } else {
       console.log("%c user is NOT logged in", "color:red");
-      setUser(false);
+      setUser(null); // Setting user to null if not logged in
     }
   }, []);
-
-  // useEffect(() => {
-  //   const isUserLogged = isUserLoggedIn();
-  //   if (isUserLogged) {
-  //     console.log("%c user is logged in :>> ", "color: green");
-  //   } else {
-  //     console.log("%c user is not logged in :>> ", "color: red");
-  //   }
-  // }, []);
 
   const logout = async () => {
     console.log("logout function triggered :>> ");
@@ -195,11 +180,9 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         if (response.ok) {
           // Clear the token from local storage
           localStorage.removeItem("token");
-
           // Update the user state
           setUser(null);
           console.log("Logout successful");
-
           // Redirect or perform any other action after logout
           // ...
         } else {

@@ -56,10 +56,9 @@ const signup = async (req, res) => {
   if (existingUser) {
     return res.status(409).json({
       message: "email already exists",
-      //FIXME - show that alert in frontend
     });
   }
-  //validation
+  //validation with vilidator
   if (!req.body.name || !req.body.email || !req.body.password) {
     return res.status(400).json({ error: "All fields must be filled" });
   }
@@ -76,7 +75,6 @@ const signup = async (req, res) => {
     minNumbers: 1,
     minSymbols: 0,
   });
-
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {
     //IF we cannot find a user with the same email in our DB, we proceed with the registration : 1st hash password, 2nd save user, 3rd reponse to the client
@@ -94,6 +92,9 @@ const signup = async (req, res) => {
 
       const savedUser = await newUser.save();
       console.log("new user saved :>> ");
+      // Create a token for the new user
+      const token = issueToken(savedUser._id);
+
       res.status(201).json({
         message: "user registered!",
         user: {
@@ -102,6 +103,7 @@ const signup = async (req, res) => {
           email: savedUser.email,
           image: savedUser.image,
         },
+        token, // Send the token as part of the response
       });
     } else {
       res.status(500).json({
@@ -114,7 +116,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   console.log("login route works :>> ");
   const { email, password } = req.body;
-  //if there´s no email and no password i send the response
+  //if there´s no email and no password I send a response
   if (!email && !password) {
     res.status(400).json({
       //(400)=Bad Request
@@ -126,7 +128,8 @@ const login = async (req, res) => {
       const existingUser = await userModel.findOne({ email: req.body.email });
       if (!existingUser) {
         res.status(500).json({
-          message: "email not found...do you already have an account?",
+          message:
+            "email not found...are you sure you already have an account?",
         });
       }
       //what if the user exists? check password!

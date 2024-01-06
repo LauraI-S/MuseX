@@ -1,19 +1,27 @@
 .profile-container {
     max-width: 600px;
     margin: auto;
-    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    font-family: 'Mukta', sans-serif;
 }
 
+.profile-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin: 10px auto;
+}
+
+.selected-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
 .image-container {
     margin-top: 20px;
-}
-
-.image-wrapper {
-    margin-top: 10px;
 }
 
 .user-info {
@@ -43,6 +51,8 @@
     background-color: #3498db;
     color: #fff;
     transition: background-color 0.3s;
+    margin-top: 10px;
+    max-width: 200px;
 }
 
 .input-container label:hover {
@@ -59,14 +69,36 @@
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
+    max-width: 200px;
 }
 
 .user-info button:hover {
     background-color: #c0392b;
 }
-.profile-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 10px;
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 10px;
+    }
+
+    .image-container {
+        margin-top: 10px;
+    }
+
+    .user-info {
+        margin-top: 10px;
+    }
+
+    .input-container label,
+    .user-info button {
+        padding: 8px 12px;
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        max-width: 90%;
+    }
 }
