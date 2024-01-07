@@ -71,9 +71,9 @@ const signup = async (req, res) => {
   validator.isStrongPassword(req.body.password, {
     minLength: 8,
     minLowercase: 1,
-    minUppercase: 0,
+    minUppercase: 1,
     minNumbers: 1,
-    minSymbols: 0,
+    minSymbols: 1,
   });
   //if a user with that email is found in our database, we send a response to our client informing about it(email already existing ...)
   if (!existingUser) {

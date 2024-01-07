@@ -24,7 +24,7 @@
 
 //   return (
 //     <>
-//       {isLoading ? (
+//       { ? (
 //         <h1>
 //           {
 //             <div className="spinner-border" role="status">

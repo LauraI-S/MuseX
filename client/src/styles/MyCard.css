@@ -1,3 +1,62 @@
+.landing-container {
+    position: relative;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.landing-title {
+    font-family: 'Mukta',
+            sans-serif;
+    /* Replace 'YourChosenFont' with the actual font name */
+    font-size: 36px;
+    /* Adjust the font size as needed */
+    font-weight: bold;
+    color: #333;
+    /* Choose a suitable text color */
+    margin-top: 20px;
+    /* Adjust the margin as needed */
+}
+.landing-image {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.landing-text {
+    z-index: 2;
+    position: relative;
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Add a semi-transparent background to make text readable */
+    border-radius: 10px;
+}
+
+.landing-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.landing-description {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.landing-button {
+    font-size: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.landing-button:hover {
+    background-color: #0056b3;
+}
 .my-card {
     background-color: #f0f0f0;
     border-radius: 10px;
@@ -14,13 +73,13 @@
 }
 
 
-    img {
+    /* img {
         width: 80px;
         height: 80px;
         border-radius: 50%;
         margin-right: 16px;
         border-radius: 50%;
-    }
+    } */
 card-conrainer {
     padding: 20px;
 

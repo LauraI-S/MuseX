@@ -6,9 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import "../src/styles/index.css";
-import "bootstrap/dist/css/bootstrap.css";
-import Home from "../src/pages/Home";
-import SignUp from "../src/pages/SignUp";
+import Home from "./pages/Home";
+import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import DetailsCard from "./pages/DetailsCard";
 import MyNavbar from "./components/MyNavbar";
@@ -25,7 +24,7 @@ function App() {
     <div className="App">
       {/* <Router> */}
       <MyNavbar />
-      <h1>Muse-X find YOUR Musician</h1>
+      {/* <h1>Muse-X - Find YOUR Musician</h1> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/post" element={<PostRequirements />} />

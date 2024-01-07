@@ -8,32 +8,32 @@ import React, {
 } from "react";
 import { Navigate } from "react-router-dom";
 
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-  image: string;
-  password: string;
-};
+// type User = {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   image: string;
+//   password: string;
+// };
 
-interface AuthContextType {
-  user: User | null;
-  name: string;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  signup: (email: string, name: string, password: string) => void;
-  login: () => void;
-  getProfile: () => void;
-  logout: () => void;
-}
+// interface AuthContextType {
+//   user: User | null;
+//   name: string;
+//   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+//   signup: (email: string, name: string, password: string) => void;
+//   login: () => void;
+//   getProfile: () => void;
+//   logout: () => void;
+// }
 
-interface AuthContextProviderProps {
-  children: ReactNode;
-}
-type LoginCredentialsType = {
-  // userName: string;
-  email: string;
-  password: string;
-};
+// interface AuthContextProviderProps {
+//   children: ReactNode;
+// }
+// type LoginCredentialsType = {
+//   // userName: string;
+//   email: string;
+//   password: string;
+// };
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
@@ -200,6 +200,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const handleLogout = () => {
     logout();
   };
+
   const signup = async (email: string, name: string, password: string) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -218,7 +219,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       headers: myHeaders,
       body: urlencoded,
     };
-
     try {
       const response = await fetch(
         "http://localhost:4000/api/users/signup",
@@ -228,20 +228,23 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       if (response.ok) {
         const result = await response.json();
         console.log("result", result);
-
         // Update the user state with the registered user information
         setUser(result.user);
         setUserName(result.user.name);
-
-        // window.alert("You have successfully registered!");
       } else {
         const result = await response.json();
-        console.log("result not ok:>> ", result);
-        alert(result.message);
+        if (result.error === "Password not strong enough") {
+          // Handle the "Password not strong enough" error message
+          alert("Password not strong enough. Please use a stronger password.");
+        } else {
+          // Handle other error messages
+          console.log("result not ok:>> ", result);
+          alert(result.message);
+        }
       }
     } catch (error) {
       console.log("error :>> ", error);
-      // window.alert("Registration failed. Please try again.");
+      window.alert("Registration failed. Please try again.");
     }
   };
 

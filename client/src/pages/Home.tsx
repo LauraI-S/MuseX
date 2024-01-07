@@ -3,36 +3,16 @@ import { Link } from "react-router-dom";
 import MyCard from "../components/MyCard";
 import "../styles/MyCard.css";
 import { AuthContext } from "../context/AuthContext";
-
-type Musician = {
-  _id: any;
-  name: string;
-  instrument: string[];
-  hasEquipment: boolean;
-  img: string;
-  summary: string;
-  musician: Musician;
-};
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-  image: string;
-  password: string;
-};
+import landingPageImage from "../images/musician.Boti.jpg";
 
 function Home() {
   const { user } = useContext(AuthContext);
-  console.log("user :>> ", user);
-  console.log("component run");
   const [musicians, setMusicians] = useState<[Musician] | null>(null);
 
   const getMusicians = () => {
     fetch("http://localhost:4000/api/musicians/all")
       .then((response) => response.json())
       .then((result) => {
-        console.log("result of fetch :>> ", result);
-        console.log("result.musicians :>> ", result.musicians);
         const myMuscians: [Musician] = result.musicians;
         setMusicians(myMuscians);
       })
@@ -40,33 +20,58 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log("%c useEffect runs", "color:orange");
     getMusicians();
   }, []);
 
-  console.log("musicians :>> ", musicians);
-
   return (
-    <div className="container">
-      <div className="row mx-md-auto"></div>
-      <h2>Welcome {user?.name}!</h2>
-      {user ? (
-        <div>
-          <p>Email: {user.email}</p>
-          {/* Add other user information as needed */}
-        </div>
-      ) : (
-        <p>Please log in to see your profile.</p>
-      )}
-      <p>This is the home page.</p>
-      {musicians &&
-        musicians.map((musician) => (
-          <MyCard
-            key={musician._id}
-            musician={musician}
-            hasEquipment={musician.hasEquipment}
-          />
-        ))}
+    <div className="landing-container">
+      <div className="landing-image-container">
+        <h1 className="landing-title">Muse-X - Find YOUR Musician</h1>{" "}
+        <img
+          src={landingPageImage}
+          alt="Landing Page"
+          className="landing-image"
+        />
+      </div>
+      <div className="landing-text">
+        <h1 className="landing-title">Searching for a Musician or Band?</h1>
+        <p className="landing-description">
+          We've got you covered! This is your backstage pass to creating an
+          unforgettable event.
+        </p>
+        {user ? (
+          <div>
+            <p className="landing-message">Email: {user.email}</p>
+            <Link to="/post" className="btn btn-primary landing-button">
+              Start Jamming!
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <p className="landing-message">
+              To post a request and join the jam, please{" "}
+              <Link to="/signup">sign up</Link> or{" "}
+              <Link to="/login">log in</Link> now.
+            </p>
+            <p className="landing-message">
+              Ready to make some music magic? Let's get started!
+            </p>
+          </div>
+        )}
+      </div>
+      <div className="landing-musicians">
+        <p className="landing-message">
+          Check out our list of awesome musicians below:
+        </p>
+        {musicians &&
+          musicians.map((musician) => (
+            <MyCard
+              key={musician._id}
+              musician={musician}
+              hasEquipment={musician.hasEquipment}
+            />
+          ))}
+      </div>
     </div>
   );
 }
