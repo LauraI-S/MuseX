@@ -89,6 +89,7 @@ function Login({ logout }: LoginProps) {
       console.log("error :>> ", error);
     }
   };
+
   //!building functionality to be able to go to the localstorage and check if there´s a token
   //ANCHOR - TODO - set user with userinformation in Authcontext with
 

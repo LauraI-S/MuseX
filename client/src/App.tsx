@@ -22,21 +22,16 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Router> */}
       <MyNavbar />
-      {/* <h1>Muse-X - Find YOUR Musician</h1> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/post" element={<PostRequirements />} />
         <Route path="/details" element={<DetailsCard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/profile"
-          element={<Profile key={user ? user.id : "no-user"} />}
-        />
+        <Route path="/profile" element={<Profile />} />
+        {/* oder: <Route path="/profile"  element={<Profile key={user ? user.id : "no-user"} /> */}
       </Routes>
-      {/* </Router> */}
     </div>
   );
 }

@@ -20,7 +20,7 @@ body {
 
 
 
-/* Hamburger menu styles */
+/* Hamburger menu styles
 .nav-toggle {
     background: none;
     border: none;
@@ -52,7 +52,7 @@ body {
 
 .hamburger::after {
     top: 8px;
-}
+} */
 
 /* Menu styles */
 .nav-menu {
@@ -80,7 +80,45 @@ body {
 .nav-user {
     margin-top: 10px;
 }
+.nav-logo {
+    border-radius: 50%;
+}
 
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.nav-user {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.logged-in .logout-button {
+    background-color: #e74c3c;
+    /* Style the logout button when logged in */
+    color: white;
+    padding: 5px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    /* Add some spacing between user info and logout button */
+}
+
+.profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
 /* Responsive styles */
 @media (min-width: 768px) {
     .nav-menu {

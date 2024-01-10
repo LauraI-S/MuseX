@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { getToken } from "../utils/token";
+import { MyNavbar } from "../components/MyNavbar";
 import "../styles/Profile.css";
 
 type UserImageType = {
@@ -51,20 +52,23 @@ const Profile: React.FC = () => {
       body: formData,
       headers: headers,
     };
-
     try {
       const response = await fetch(
         "http://localhost:4000/api/users/imageupload",
         requestOptions
       );
-      const result: User = await response.json();
-      setUser(result); // Update state with the new user information
-      setSelectedFile(null); // Clear the selected file after successful upload
+
+      if (response.ok) {
+        // After successful image upload, fetch the user profile again
+        await getProfile();
+        setSelectedFile(null); // Clear the selected file after successful upload
+      } else {
+        console.log("Error uploading image:", response.statusText);
+      }
     } catch (error) {
       console.log("Error uploading image:", error);
     }
   };
-
   useEffect(() => {
     // Fetch user profile when the component mounts
     getProfile();
@@ -100,36 +104,36 @@ const Profile: React.FC = () => {
     } catch (error) {
       console.log("Error fetching user profile:", error);
     }
-    const deleteUser = async () => {
-      const token = getToken();
-      if (!token) {
-        alert("Please log in to delete your account.");
-        return;
-      }
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${token}`);
+  };
+  const deleteUser = async () => {
+    const token = getToken();
+    if (!token) {
+      alert("Please log in to delete your account.");
+      return;
+    }
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
-      const requestOptions = {
-        method: "DELETE",
-        headers: myHeaders,
-      };
-
-      try {
-        const response = await fetch(
-          "http://localhost:4000/api/users/deleteUser",
-          requestOptions
-        );
-
-        if (response.ok) {
-          // Handle successful deletion, e.g., redirect to login page
-          alert("Account deleted successfully.");
-        } else {
-          console.log("Error deleting user:", response.statusText);
-        }
-      } catch (error) {
-        console.log("Error deleting user:", error);
-      }
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
     };
+
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/users/deleteUser",
+        requestOptions
+      );
+
+      if (response.ok) {
+        // Handle successful deletion, e.g., redirect to login page
+        alert("Account deleted successfully.");
+      } else {
+        console.log("Error deleting user:", response.statusText);
+      }
+    } catch (error) {
+      console.log("Error deleting user:", error);
+    }
   };
   return (
     <Card className="profile-container">
@@ -184,6 +188,15 @@ const Profile: React.FC = () => {
               <p>
                 <strong>Username:</strong> {user.name}
               </p>
+            </div>
+          )}
+
+          {/* Delete Profile Button */}
+          {user && (
+            <div className="delete-button">
+              <Button variant="danger" onClick={deleteUser}>
+                Delete Profile
+              </Button>
             </div>
           )}
         </div>

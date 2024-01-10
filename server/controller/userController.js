@@ -14,13 +14,24 @@ const imageUpload = async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "profile_images", //!<-- this creates a folder within cloudinary that stores the image
       });
-
       console.log("result".bgBlue, result);
+      // Update the user's profile with the image URL
+      const userId = req.user._id; // Assuming you have access to the user's ID
+      await userModel.findByIdAndUpdate(userId, { image: result.secure_url });
+
+      // Return the updated user profile data
+      const updatedUser = await userModel.findById(userId);
+
       res.status(201).json({
         message: "image uploaded",
         image: result.secure_url,
+        user: {
+          _id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          image: updatedUser.image,
+        },
       });
-      // return result.public_id;
     } catch (error) {
       console.error(error);
     }

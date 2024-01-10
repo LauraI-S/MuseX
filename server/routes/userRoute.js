@@ -25,6 +25,10 @@ router.post(
 );
 router.get("/profile", jwtAuthorization, getUserProfile);
 
+router.delete("/deleteUser", jwtAuthorization, deleteUser);
+
+export default router;
+
 // //!handle posts
 // // GET all requests for
 // router.get("/", (req, res) => {
@@ -57,7 +61,3 @@ router.get("/profile", jwtAuthorization, getUserProfile);
 // router.patch("/:id", (req, res) => {
 //   res.json({ mssg: "UPDATE a request for musicians" });
 // });
-
-router.delete("/deleteUser", jwtAuthorization, deleteUser);
-
-export default router;
