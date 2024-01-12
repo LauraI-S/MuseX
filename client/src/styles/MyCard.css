@@ -1,7 +1,6 @@
 .landing-container {
     position: relative;
     text-align: center;
-    max-width: 800px;
     margin: 0 auto;
 }
 .landing-title {
@@ -29,7 +28,6 @@
     text-align: center;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.8);
-    /* Add a semi-transparent background to make text readable */
     border-radius: 10px;
 }
 
@@ -57,35 +55,53 @@
 .landing-button:hover {
     background-color: #0056b3;
 }
-.my-card {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    max-width: 800px;
-        margin: auto;
-        padding: 20px;
-        display: grid;
-        gap: 20px;
-        grid-template-columns: 1fr 1fr;
-        font-family: 'Mukta', sans-serif;
-}
 
-
-    /* img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin-right: 16px;
-        border-radius: 50%;
-    } */
-card-conrainer {
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
     padding: 20px;
-
-
-
+    justify-content: center;
 }
-    div {
-        flex: 1;
-    }
+.my-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    max-width: 500px;
+    margin: 20px auto;
+    font-family: 'Mukta', sans-serif;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    /* Add some padding for better spacing */
+}
+
+.my-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.my-card p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+}
+
+.my-card a {
+    display: inline-block;
+    background-color: burlywood;
+    color: #fff;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.my-card a:hover {
+    background-color: #0056b3;
+}

@@ -5,16 +5,27 @@ import "../styles/MyCard.css";
 import { AuthContext } from "../context/AuthContext";
 import landingPageImage from "../images/musician.Boti.jpg";
 
-function Home() {
+type Musician = {
+  _id: string;
+  name: string;
+  genre: string;
+  occasion: string; // Updated to string
+  location: string;
+  availability: string;
+};
+
+const Home = () => {
   const { user } = useContext(AuthContext);
-  const [musicians, setMusicians] = useState<[Musician] | null>(null);
+  const [musicians, setMusicians] = useState<Musician[]>([]);
 
   const getMusicians = () => {
     fetch("http://localhost:4000/api/musicians/all")
       .then((response) => response.json())
       .then((result) => {
-        const myMuscians: [Musician] = result.musicians;
-        setMusicians(myMuscians);
+        console.log("API Response:", result); // Log the AP^I response
+
+        const myMusicians: Musician[] = result;
+        setMusicians(myMusicians);
       })
       .catch((error) => console.log("error", error));
   };
@@ -63,17 +74,32 @@ function Home() {
         <p className="landing-message">
           Check out our list of awesome musicians below:
         </p>
-        {musicians &&
-          musicians.map((musician) => (
-            <MyCard
-              key={musician._id}
-              musician={musician}
-              hasEquipment={musician.hasEquipment}
-            />
-          ))}
+        <div>
+          {musicians &&
+            musicians.map(
+              (musician) => (
+                console.log("musician._id:", musician._id),
+                (
+                  <Link to={`/musicians/${musician._id || "undefined"}`}>
+                    {musician.name}
+                  </Link>
+                )
+              )
+            )}
+        </div>
+        <div className="cards-container">
+          {musicians &&
+            musicians.map((musician) => (
+              <MyCard
+                key={`card-${musician._id}`}
+                musician={musician}
+                location={musician.location}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Home;

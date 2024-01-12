@@ -9,7 +9,7 @@ import "../src/styles/index.css";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import DetailsCard from "./pages/DetailsCard";
+import MusicianDetails from "./pages/MusicianDetails";
 import MyNavbar from "./components/MyNavbar";
 import Profile from "./pages/Profile";
 import PostRequirements from "./pages/PostRequirements";
@@ -26,11 +26,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/post" element={<PostRequirements />} />
-        <Route path="/details" element={<DetailsCard />} />
+        <Route path="/musicians/:_id" element={<MusicianDetails />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
-        {/* oder: <Route path="/profile"  element={<Profile key={user ? user.id : "no-user"} /> */}
       </Routes>
     </div>
   );

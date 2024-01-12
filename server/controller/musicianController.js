@@ -1,135 +1,96 @@
-import musicianModel from "../Model/musicianModel.js";
+import MusicianModel from "../Model/musicianModel.js";
 
-//!Controllerfunction:
+// Get all musicians
 const getAllMusicians = async (req, res) => {
   try {
-    const musicians = await musicianModel
-      .find({})
-      .populate({ path: "user", select: ["name", " _id"] });
-
-    if (musicians) {
-      res.status(200).json({
-        musicians: musicians,
-        number: musicians.length,
-      });
-    } else {
-      if (musicians.length === 0) {
-        res.status(200).json({
-          message: "Didn't find documents in the database",
-        });
-      }
-    }
-  } catch (err) {
-    console.log("error :>> ", err);
-    res.status(500).json({
-      message: "An error occurred while fetching musicians",
-      error: err.message,
-    });
+    const musicians = await MusicianModel.find();
+    return res.status(200).json(musicians);
+  } catch (error) {
+    console.error("Error fetching musicians:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
+// Get a single musician by ID
 const getMusicianDetails = async (req, res) => {
-  console.log("musicianDetailRoute working :>> ");
   try {
-    const musicians = await musicianModel
-      .find({})
-      .populate({
-        path: "user",
-        select: [
-          "name",
-          " _id",
-          "genre",
-          "instrument",
-          "summary",
-          "img",
-          "email",
-          "likes",
-        ],
-      });
+    const { _id } = req.params;
+    const musician = await MusicianModel.findById(_id);
 
-    if (musicians) {
-      res.status(200).json({
-        musicians: musicians,
-        number: musicians.length,
-      });
-    } else {
-      if (musicians.length === 0) {
-        res.status(200).json({
-          message: "Didn't find documents in the database",
-        });
-      }
+    if (!musician) {
+      return res.status(404).json({ message: "Musician not found" });
     }
-  } catch (err) {
-    console.log("error :>> ", err);
-    res.status(500).json({
-      message: "An error occurred while fetching musicians",
-      error: err.message,
-    });
+
+    return res.status(200).json(musician);
+  } catch (error) {
+    console.error("Error fetching musician details:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
-const getMusiciansWithLikes = async (req, res) => {
-  console.log("req :>> ".magenta, req.params.likes);
-  const { likes } = req.params;
-  console.log("likes :>> ", likes);
-  if (req.params.likes) {
-    try {
-      const musiciansWithLikes = await musicianModel.find({
-        likes: req.params.likes,
-      });
-      res.status(200).json({
-        number: musiciansWithLikes.length,
-      });
-    } catch (error) {
-      console.log("error :>> ", error);
-      res.status(500).json({
-        message: "something went wrong",
-      });
-    }
+const createMusician = async (req, res) => {
+  try {
+    // Extract musician data from the request body
+    const musicianData = req.body;
+
+    // Create a new musician instance
+    const newMusician = new MusicianModel(musicianData);
+
+    // Save the musician to the database
+    const savedMusician = await newMusician.save();
+
+    return res.status(201).json(savedMusician);
+  } catch (error) {
+    console.error("Error creating musician:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// const getMusiciansByInstruments = async (req, res) => {
-//   console.log("req :>> ".magenta, req.params.instrument);
-//   const { instrument } = req.params; // Corrected variable name
-//   console.log("instrument :>> ", instrument);
-//   if (req.params.instrument) {
-//     try {
-//       const musiciansByInstruments = await musicianModel.find({
-//         instrument: req.params.instrument, // Corrected parameter name
-//       });
-//       res.status(200).json({
-//         string: musiciansByInstruments,
-//       });
-//     } catch (error) {
-//       console.log("error :>> ", error);
-//       res.status(500).json({
-//         message: "something went wrong",
-//       });
-//     }
-//   }
-// };
+// Update a musician by ID
+const updateMusician = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const updatedMusicianData = req.body;
 
-// const getMusiciansByInstruments = async (req, res) => {
-//   console.log("req :>> ".magenta, req.params.instrument);
-//   const { instrument } = req.params;
-//   console.log("instruments :>> ", instrument);
-//   if (req.params.instrument) {
-//     try {
-//       const musiciansByInstruments = await musicianModel.find({
-//         instrument: req.params.instrument,
-//       });
-//       res.status(200).json({
-//         number: musiciansByInstruments.length,
-//         musicians: musiciansByInstrument,
-//       });
-//     } catch (error) {
-//       console.log("error :>> ", error);
-//       res.status(500).json({
-//         message: "something went wrong",
-//       });
-//     }
-//   }
-// };
+    const updatedMusician = await MusicianModel.findByIdAndUpdate(
+      _id,
+      updatedMusicianData,
+      { new: true }
+    ); // Updated the model name
 
-export { getAllMusicians, getMusiciansWithLikes, getMusicianDetails };
+    if (!updatedMusician) {
+      return res.status(404).json({ message: "Musician not found" });
+    }
+
+    return res.status(200).json(updatedMusician);
+  } catch (error) {
+    console.error("Error updating musician:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Delete a musician by ID
+const deleteMusician = async (req, res) => {
+  try {
+    const { _id } = req.params;
+
+    const deletedMusician = await MusicianModel.findOneAndDelete({ _id: _id });
+
+    if (!deletedMusician) {
+      return res.status(404).json({ message: "Musician not found" });
+    }
+
+    return res.status(200).json({ message: "Musician deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting musician:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export {
+  getAllMusicians,
+  getMusicianDetails,
+  updateMusician,
+  createMusician,
+  deleteMusician,
+};

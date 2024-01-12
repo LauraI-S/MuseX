@@ -1,46 +1,48 @@
 import mongoose from "mongoose";
 
-//! first create a schema that I turn into a model which is going to
-//! define the kind of documents that I´m going to store in my collection called musicians
 const musicianSchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId,
-  },
+  // _id: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   default: mongoose.Types.ObjectId,
+  // },
   name: {
     type: String,
     required: true,
   },
   genre: {
-    type: Array,
+    type: String,
     required: false,
   },
-  hasEquipment: {
-    type: Boolean,
-    required: true,
+  occasion: {
+    type: String,
+    required: false,
   },
-  instrument: {
-    type: Array,
-    required: true,
+  location: {
+    type: String,
+    required: false,
   },
   summary: {
     type: String,
-    required: true,
+    required: false,
   },
   img: {
     type: String,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
-    required: true,
-  },
-  likes: {
-    type: Number,
     required: false,
   },
-  user: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+  availability: {
+    type: String,
+    required: false,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
 });
+
 const musicianModel = mongoose.model("musician", musicianSchema);
 
 export default musicianModel;
