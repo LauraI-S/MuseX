@@ -1,13 +1,6 @@
 import express from "express";
 import requestModel from "../Model/requestModel.js";
-import {
-  signup,
-  login,
-  getUserProfile,
-  imageUpload,
-  deleteUser,
-  logout,
-} from "../controller/userController.js";
+
 import {
   createRequest,
   getRequest,

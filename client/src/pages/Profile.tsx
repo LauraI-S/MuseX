@@ -162,12 +162,7 @@ const Profile: React.FC = () => {
             <form onSubmit={uploadImage}>
               <label htmlFor="image" className="custom-upload-button">
                 Upload Picture
-                <input
-                  type="file"
-                  id="image"
-                  accept="image/*"
-                  onChange={handleInputChange}
-                />
+                <input type="file" id="image" onChange={handleInputChange} />
               </label>
               <Button variant="secondary" type="submit">
                 Upload

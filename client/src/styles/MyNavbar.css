@@ -18,42 +18,6 @@ body {
     font-family: 'Mukta', sans-serif;
 }
 
-
-
-/* Hamburger menu styles
-.nav-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.hamburger {
-    width: 25px;
-    height: 2px;
-    background-color: white;
-    position: relative;
-    display: block;
-}
-
-.hamburger::before,
-.hamburger::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    left: 0;
-    transition: all 0.3s;
-}
-
-.hamburger::before {
-    top: -8px;
-}
-
-.hamburger::after {
-    top: 8px;
-} */
-
 /* Menu styles */
 .nav-menu {
     display: flex;
@@ -76,7 +40,12 @@ body {
     padding: 10px 0;
     display: block;
 }
-
+.nav-menu a:hover {
+    background-color: #ff9966;
+    /* Change background color on hover */
+    border-radius: 5px;
+    /* Add some border radius for a button-like effect */
+}
 .nav-user {
     margin-top: 10px;
 }
@@ -132,15 +101,47 @@ body {
     }
 
     .nav-menu ul {
+    list-style: none;
+        padding: 0;
         display: flex;
-        flex-direction: row;
     }
 
     .nav-menu a {
-        padding: 0 10px;
+        color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            /* Adjust padding for better spacing */
+            display: block;
+            transition: background-color 0.3s;
+            /* Add a smooth transition effect */
     }
 
     .nav-user {
         margin-left: 20px;
     }
+}
+
+.auth-links ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    /* Adjust padding for better spacing */
+    display: block;
+    border: 1px solid white;
+    /* Add a border around the links */
+    border-radius: 5px;
+    /* Add some border radius for a button-like effect */
+    transition: background-color 0.3s;
+    /* Add a smooth transition effect */
+}
+
+.auth-links a:hover {
+    background-color: #ff9966;
+    /* Change background color on hover */
 }

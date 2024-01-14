@@ -25,16 +25,3 @@ router.patch("/:_id", updateMusician);
 router.delete("/:_id", deleteMusician);
 
 export default router;
-
-//!
-// const router = express.Router();
-
-// router.get("/all", getAllMusicians);
-// router.get("/musicianDetails", getMusicianDetails);
-// router.get("/:id", getMusicianDetails);
-
-// // router.get("/:likes", getMusiciansWithLikes);
-// // router.get("/:instrument", getMusiciansByInstruments);
-
-// export default router;
-//!

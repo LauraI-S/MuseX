@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MyCard from "../components/MyCard";
 import "../styles/MyCard.css";
 import { AuthContext } from "../context/AuthContext";
@@ -9,7 +9,7 @@ type Musician = {
   _id: string;
   name: string;
   genre: string;
-  occasion: string; // Updated to string
+  occasion: string;
   location: string;
   availability: string;
 };
@@ -22,8 +22,6 @@ const Home = () => {
     fetch("http://localhost:4000/api/musicians/all")
       .then((response) => response.json())
       .then((result) => {
-        console.log("API Response:", result); // Log the AP^I response
-
         const myMusicians: Musician[] = result;
         setMusicians(myMusicians);
       })
@@ -33,6 +31,20 @@ const Home = () => {
   useEffect(() => {
     getMusicians();
   }, []);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user is logged in
+    if (!user) {
+      alert("Please log in first");
+
+      // If not logged in, redirect to the login page
+      navigate("/login");
+    } else {
+      // If logged in, fetch musicians
+      getMusicians();
+    }
+  }, [user, navigate]);
 
   return (
     <div className="landing-container">
@@ -74,19 +86,6 @@ const Home = () => {
         <p className="landing-message">
           Check out our list of awesome musicians below:
         </p>
-        <div>
-          {musicians &&
-            musicians.map(
-              (musician) => (
-                console.log("musician._id:", musician._id),
-                (
-                  <Link to={`/musicians/${musician._id || "undefined"}`}>
-                    {musician.name}
-                  </Link>
-                )
-              )
-            )}
-        </div>
         <div className="cards-container">
           {musicians &&
             musicians.map((musician) => (

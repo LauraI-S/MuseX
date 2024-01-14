@@ -6,34 +6,34 @@ import React, {
   ReactNode,
   ChangeEvent,
 } from "react";
-import { Navigate } from "react-router-dom";
+import { navigate } from "react-router-dom";
 
-// type User = {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   image: string;
-//   password: string;
-// };
+type User = {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
+  password: string;
+};
 
-// interface AuthContextType {
-//   user: User | null;
-//   name: string;
-//   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-//   signup: (email: string, name: string, password: string) => void;
-//   login: () => void;
-//   getProfile: () => void;
-//   logout: () => void;
-// }
+interface AuthContextType {
+  user: User | null;
+  name: string;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  signup: (email: string, name: string, password: string) => void;
+  login: () => void;
+  getProfile: () => void;
+  logout: () => void;
+}
 
-// interface AuthContextProviderProps {
-//   children: ReactNode;
-// }
-// type LoginCredentialsType = {
-//   // userName: string;
-//   email: string;
-//   password: string;
-// };
+interface AuthContextProviderProps {
+  children: ReactNode;
+}
+type LoginCredentialsType = {
+  // userName: string;
+  email: string;
+  password: string;
+};
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
@@ -183,8 +183,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
           // Update the user state
           setUser(null);
           console.log("Logout successful");
-          // Redirect or perform any other action after logout
-          // ...
         } else {
           const result = await response.json();
           console.log("Logout failed: ", result.message);
