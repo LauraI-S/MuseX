@@ -16,9 +16,8 @@ const imageUpload = async (req, res) => {
       });
       console.log("result".bgBlue, result);
       // Update the user's profile with the image URL
-      const userId = req.user._id; // Assuming you have access to the user's ID
+      const userId = req.user._id;
       await userModel.findByIdAndUpdate(userId, { image: result.secure_url });
-
       // Return the updated user profile data
       const updatedUser = await userModel.findById(userId);
 
@@ -36,7 +35,6 @@ const imageUpload = async (req, res) => {
       console.error(error);
     }
   } else {
-    //TODO - figure out how to send this error to the user
     res.status(500).json({
       message: "file not supported",
     });

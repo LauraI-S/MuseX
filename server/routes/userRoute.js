@@ -7,7 +7,6 @@ import {
   deleteUser,
   logout,
 } from "../controller/userController.js";
-import Request from "../Model/requestModel.js";
 import jwtAuthorization from "../middlewares/jwtAuthorization.js";
 import multerUpload from "../middlewares/multer.js";
 

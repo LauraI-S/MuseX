@@ -5,14 +5,9 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "../styles/Login.css";
 
-// type LoginCredentialsType = {
-//   // userName: string;
-//   email: string;
-//   password: string;
-// };
 interface LoginProps {
   logout: () => void;
 }
@@ -22,7 +17,7 @@ function Login({ logout }: LoginProps) {
   const [loginCredentials, setLoginCredentials] =
     useState<LoginCredentialsType | null>(null);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const { user, isUserLoggedIn } = useContext(AuthContext);
+  const { isUserLoggedIn } = useContext(AuthContext);
 
   //my function to toggle the password-visibility
   const togglePasswordVisibility = () => {
@@ -32,7 +27,6 @@ function Login({ logout }: LoginProps) {
   const handleLoginInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const propertyValue = e.target.value;
     const propertyName = e.target.name;
-    // console.log('propertyName,propertyValue :>> ', propertyName, propertyValue);
 
     //->State (Zustand) used by the handleLoginInputChange-function saves data that might change! the "!" makes sure that it is not set to "null"-which is unwahrscheinlich beacause it is already in a setter-form which means something is happening to it,right?
     //... spread-operator, ("!") non- null-assertion (TS)
@@ -45,7 +39,6 @@ function Login({ logout }: LoginProps) {
   //! my Function to handle the login form submission
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //prevents default behaviour to reload the page when a form is submitted
-    console.log("loginCredentials :>> ", loginCredentials);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -64,7 +57,6 @@ function Login({ logout }: LoginProps) {
         "http://localhost:4000/api/users/login",
         requestOptions
       );
-      console.log("response :>> ", response);
       if (response.ok) {
         const result = await response.json();
         console.log("result :>> ", result);
@@ -82,32 +74,12 @@ function Login({ logout }: LoginProps) {
 
       if (!response.ok) {
         const result = await response.json();
-        console.log("result not ok:>> ", result);
         alert(result.message);
       }
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
-
-  //!building functionality to be able to go to the localstorage and check if there´s a token
-  //ANCHOR - TODO - set user with userinformation in Authcontext with
-
-  // const getToken = () => {
-  //   const token = localStorage.getItem("token");
-  //   return token;
-  // };
-  // const loginUser = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const success = await login(
-  //     loginCredentials!.email,
-  //     loginCredentials!.password
-  //   );
-
-  //   if (success) {
-  //     setLoginSuccess(true);
-  //   }
-  // };
 
   useEffect(() => {
     const isUserLogged = isUserLoggedIn();
@@ -119,53 +91,48 @@ function Login({ logout }: LoginProps) {
   }, []);
 
   return (
-    <div className="container">
-      <br />
-      <div className="login-container">
-        <h1 className="text-center">LOG IN</h1>
-        <form onSubmit={login}>
-          <p className="text-center">Enter your credentials below to log in:</p>
-          {/* email-Input */}
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="text"
-              placeholder="Enter your e-mail..."
-              name="email"
-              onChange={handleLoginInputChange}
-            />
-          </div>
+    <div className="login-container">
+      <h1 className="login-title">Welcome Back!</h1>
+      <form onSubmit={login} className="login-form">
+        <p className="login-subtitle">Log in to find your perfect musicians:</p>
 
-          {/* !Password-Input */}
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type={showPassword ? "hide" : "password"}
-              placeholder="Enter your password..."
-              name="password"
-              onChange={handleLoginInputChange}
-            />
-          </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Enter your email"
+            name="email"
+            className="login-input"
+            onChange={handleLoginInputChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            name="password"
+            className="login-input"
+            onChange={handleLoginInputChange}
+          />
           <div className="password-toggle" onClick={togglePasswordVisibility}>
-            {showPassword ? "Rather hide my" : "Show me that"} password
+            {showPassword ? "Hide Password" : "Show Password"}
           </div>
+        </div>
 
-          <button type="submit" className="btn btn-primary">
-            Log In
-          </button>
-        </form>
-      </div>
+        <button type="submit" className="login-button">
+          Log In
+        </button>
+      </form>
 
-      <p className="text-center">
+      <p className="login-text">
         Don't have an account?{" "}
-        <a className="resetButton" href="signup">
-          Sign up!
+        <a className="signup-link" href="signup">
+          Sign up now!
         </a>
       </p>
+
       {loginSuccess && (
-        <div className="alert alert-success" role="alert">
-          You've been successfully logged in!
-        </div>
+        <div className="login-success">You've been successfully logged in!</div>
       )}
     </div>
   );

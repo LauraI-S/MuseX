@@ -225,7 +225,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
       if (response.ok) {
         const result = await response.json();
-        console.log("result", result);
         // Update the user state with the registered user information
         setUser(result.user);
         setUserName(result.user.name);
