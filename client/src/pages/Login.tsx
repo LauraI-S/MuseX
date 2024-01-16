@@ -27,7 +27,6 @@ function Login({ logout }: LoginProps) {
   const handleLoginInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const propertyValue = e.target.value;
     const propertyName = e.target.name;
-
     //->State (Zustand) used by the handleLoginInputChange-function saves data that might change! the "!" makes sure that it is not set to "null"-which is unwahrscheinlich beacause it is already in a setter-form which means something is happening to it,right?
     //... spread-operator, ("!") non- null-assertion (TS)
     setLoginCredentials({
@@ -43,7 +42,6 @@ function Login({ logout }: LoginProps) {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    //(!) making sure that loginCredentials is not null when called
     urlencoded.append("email", loginCredentials!.email);
     urlencoded.append("password", loginCredentials!.password);
 
@@ -59,7 +57,6 @@ function Login({ logout }: LoginProps) {
       );
       if (response.ok) {
         const result = await response.json();
-        console.log("result :>> ", result);
         // !checking if we have a token -> if yes: storing it in our localstorage (which is basically an "object within js that allows us to save key/value pairs in the browser")
         if (result.token) {
           localStorage.setItem("token", result.token);

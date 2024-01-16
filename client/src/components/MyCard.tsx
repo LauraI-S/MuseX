@@ -9,14 +9,12 @@ type MyCardProps = {
     genre: string[];
     occasion: string;
     location: string;
-    // Add any other relevant properties you might have
   };
 };
 
 const MyCard: React.FC<MyCardProps> = ({ musician }) => {
   return (
     <div className="my-card">
-      {/* <img src={musician.image} alt={musician.name} className="musician-image" /> */}
       <div className="musician-info">
         <h3 className="musician-name">🌟 {musician.name} 🌟</h3>
         <p className="musician-genre">Tunes in: {musician.location}</p>

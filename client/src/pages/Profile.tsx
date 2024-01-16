@@ -25,7 +25,6 @@ type OkResponse = {
 const Profile: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // const [newUser, setNewUser] = useState<User | null>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -105,6 +104,7 @@ const Profile: React.FC = () => {
       console.log("Error fetching user profile:", error);
     }
   };
+
   const deleteUser = async () => {
     const token = getToken();
     if (!token) {
@@ -157,7 +157,6 @@ const Profile: React.FC = () => {
             </div>
           )}
 
-          {/* Upload form */}
           <div className="input-container">
             <form onSubmit={uploadImage}>
               <label htmlFor="image" className="custom-upload-button">
@@ -170,13 +169,10 @@ const Profile: React.FC = () => {
             </form>
           </div>
 
-          {/* User Information */}
+          {/*! User Information */}
           {user && (
             <div className="user-info">
               <h4>User Information</h4>
-              <p>
-                <strong>User ID:</strong> {user.id}
-              </p>
               <p>
                 <strong>Email:</strong> {user.email}
               </p>

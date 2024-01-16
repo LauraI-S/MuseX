@@ -6,7 +6,6 @@ import React, {
   ReactNode,
   ChangeEvent,
 } from "react";
-import { navigate } from "react-router-dom";
 
 type User = {
   _id: string;

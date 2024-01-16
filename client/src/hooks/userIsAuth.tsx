@@ -8,8 +8,4 @@ export const userIsAuthContext = () => {
     throw Error("useAuthContext must be used inside an AuthContextProvider");
   }
   return context;
-  //   const isAuthenticated = user !== null ? true : false;
-  //   return isAuthenticated;
 };
-
-// export default userIsAuthContext;
